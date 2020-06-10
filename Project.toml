@@ -2,5 +2,8 @@ name = "BayesianDataFusion"
 uuid = "7aa4cad0-db46-4af6-8863-0915814ff426"
 version = "2.0.0"
 
+[deps]
+Compat = "34da2185-b29b-5c13-b0c7-acf172513d20"
+
 [compat]
-Julia = ">= 0.7.0" # [1.2.3,  ∞)
+julia = ">= 0.7.0"
