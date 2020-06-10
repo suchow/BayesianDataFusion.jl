@@ -2,7 +2,7 @@ using Compat
 using Distributions
 using PDMats
 
-import Base.LinAlg: Cholesky
+using LinearAlgebra
 
 immutable NormalWishart <: Distribution
     dim::Int
