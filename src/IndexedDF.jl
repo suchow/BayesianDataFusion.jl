@@ -1,4 +1,5 @@
 using DataFrames
+using SparseArrays
 
 export IndexedDF, getData, getCount, removeSamples, getValues, valueMean
 export FastIDF
@@ -28,7 +29,6 @@ import Base.size
 size(idf::IndexedDF) = tuple( [length(i) for i in idf.index]... )
 size(idf::IndexedDF, i::Integer) = length(idf.index[i])
 
-import Base.nnz
 nnz(idf::IndexedDF) = size(idf.df, 1)
 
 function removeSamples(idf::IndexedDF, samples)
@@ -69,7 +69,7 @@ function getData(f::FastIDF, mode::Integer, i::Integer)
   return f.ids[id,:], f.values[id]
 end
 
-import Base.size, Base.nnz
+import Base.size
 size(f::FastIDF) = tuple( [length(i) for i in f.index]... )
 size(f::FastIDF, i::Integer) = length(f.index[i])
 nnz(f::FastIDF) = size(f.values, 1)
