@@ -2,7 +2,7 @@ export macau_hmc
 
 using Compat
 
-type HMCModel
+mutable struct HMCModel
   momentum::Matrix{Float64}
   G       ::Matrix{Float64} ## diagonal mass matrix
 end

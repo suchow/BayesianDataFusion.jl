@@ -26,7 +26,7 @@ function udot(r::Relation, probe_vec::DataFrame)
   return vec(sum(U, 1))
 end
 
-## faster udot (about 2x) for matrices 
+## faster udot (about 2x) for matrices
 function udot(r::Relation, probe_vec::Matrix)
   if length(size(r)) == 2
     ## special code for matrix
@@ -233,7 +233,7 @@ function sample_user_basic(uu::Integer, Au::FastIDF, mode::Int, mean_rating, sam
   chol(Hermitian(covar))' * randn(length(mu_u)) + mu
 end
 
-type Block
+mutable struct Block
   ux::Vector{Int}   ## ids of the latent variables
   vx::Vector{Int}   ## ids of the other side
   Yma::Matrix{Float64} ## Y values w/o mean, size: length(v_idx) x length(u_idx)
@@ -294,12 +294,12 @@ function sample_beta(entity, sample_u_c, Lambda_u, lambda_beta, use_ff::Bool, to
   if isnan(tol)  ## default tolerance
     tol = eps() * numF
   end
-  
+
   mv = MultivariateNormal(zeros(D), inv(PDMat(Symmetric(Lambda_u))) )
   ## TODO: using Ft_mul_Bt will be faster
   Ft_y = Ft_mul_B(entity, sample_u_c' + rand(mv, N)') + sqrt(lambda_beta) * rand(mv, numF)'
   #Ft_y = At_mul_B(entity.F, sample_u_c + rand(mv, N)') + sqrt(lambda_beta) * rand(mv, numF)'
-  
+
   if use_ff
     beta = solve_full(entity.FF, Ft_y, lambda_beta)
   elseif ! isempty(entity.Frefs)

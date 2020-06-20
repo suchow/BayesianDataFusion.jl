@@ -6,7 +6,7 @@ export AtA_mul_B!
 
 using Compat
 
-type SparseBinMatrix
+mutable struct SparseBinMatrix
   m::Int64
   n::Int64
   mrange::UnitRange{Int32}
@@ -45,7 +45,7 @@ end
 import Base.ndims
 ndims(sbm::SparseBinMatrix) = 2
 
-type ParallelLogic
+mutable struct ParallelLogic
   ## for parallel compute
   mblocks::Vector{UnitRange{Int32}}
   nblocks::Vector{UnitRange{Int32}}
@@ -67,7 +67,7 @@ end
 
 nonshared(A::ParallelLogic) = ParallelLogic(A.mblocks, A.nblocks, A.mblock_order, A.nblock_order, A.localm, A.localn)
 
-@compat type ParallelSBM
+mutable struct ParallelSBM
   m::Int64
   n::Int64
   pids::Vector{Int64}
@@ -75,7 +75,7 @@ nonshared(A::ParallelLogic) = ParallelLogic(A.mblocks, A.nblocks, A.mblock_order
   logic::Vector{Future} ## ParallelLogic
 
   numblocks::Int                ## number of blocks, each has semaphore
-  tmp::SharedVector{Float64}    ## for storing middle vector in A'A 
+  tmp::SharedVector{Float64}    ## for storing middle vector in A'A
   sh1::SharedVector{Float64}    ## length(sh1) = A.n
   sh2::SharedVector{Float64}    ## length(sh2) = A.n
   sems::Vector{SharedArray{UInt32,1}} ## semaphores

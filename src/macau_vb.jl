@@ -3,7 +3,7 @@ export VBModel
 
 using Compat
 
-type VBModel
+mutable struct VBModel
   mu_u::Matrix{Float64}    ## means of u_i
   Euu ::Array{Float64, 3}  ## storing E[u u'] = Lambda_u^{-1} + mu_u mu_u'
 
