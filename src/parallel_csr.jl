@@ -2,7 +2,7 @@ export pmult, imult
 export psparse, ParallelSparseMatrix
 export SparseMatrixCSR, sparse_csr
 
-type ParallelSparseMatrix{TF}
+mutable struct ParallelSparseMatrix{TF}
   F::TF
   refs::Vector{Any}
   procs::Vector{Int}
@@ -33,7 +33,7 @@ At_mul_B(A::ParallelSparseMatrix, B::ParallelSparseMatrix) = At_mul_B(A.F, B.F)
 
 ###### CSR matrix ######
 
-type SparseMatrixCSR{Tv,Ti}
+mutable struct SparseMatrixCSR{Tv,Ti}
   csc::SparseMatrixCSC{Tv,Ti}
 end
 

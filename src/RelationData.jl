@@ -2,7 +2,7 @@ using DataFrames
 using Compat
 
 include("IndexedDF.jl")
-typealias SparseMatrix SparseMatrixCSC{Float64, Int64} 
+typealias SparseMatrix SparseMatrixCSC{Float64, Int64}
 
 export RelationData, addRelation!
 export Relation, numData, numTest, assignToTest!, setTest!
@@ -11,7 +11,7 @@ export EntityModel
 export load_mf1c
 export setPrecision!
 
-type EntityModel
+mutable struct EntityModel
   sample::Matrix{Float64}  ## latent vectors (each column is one instance)
 
   mu    ::Vector{Float64}  ## mean
@@ -39,7 +39,7 @@ type EntityModel
   )
 end
 
-@compat type Entity{FT,R}
+mutable struct Entity{FT,R}
   F::FT
   FF
   use_FF::Bool
@@ -104,7 +104,7 @@ function toStr(en::Entity)
     "]")
 end
 
-type RelationModel
+mutable struct RelationModel
   alpha_sample::Bool
   alpha_nu0::Float64
   alpha_lambda0::Float64
@@ -118,14 +118,14 @@ end
 
 RelationModel(alpha::Float64=1.0, lambda_beta::Float64=1.0) = RelationModel(false, 2.0, 1.0, lambda_beta, alpha, zeros(0), 0.0)
 
-type RelationTemp
+mutable struct RelationTemp
   linear_values::Vector{Float64} ## mean_value + F * beta
   FF::Matrix{Float64}
 
   RelationTemp() = new()
 end
 
-type Relation
+mutable struct Relation
   data::IndexedDF
   F
   entities::Vector{Entity}
@@ -251,7 +251,7 @@ function setTest!(r::Relation, test_mat::SparseMatrixCSC)
   nothing
 end
 
-type RelationData
+mutable struct RelationData
   entities::Vector{Entity}
   relations::Vector{Relation}
 
@@ -472,14 +472,14 @@ function load_mf1c(;ic50_file     = "chembl_19_mf1c/chembl-IC50-346targets.csv",
   idx          = sample(1:size(X,1), round(Int, floor(20/100 * size(X,1))); replace=false)
   probe_vec    = X[idx,:]
   X            = X[setdiff(1:size(X,1), idx), :]
-  
+
   ## reading feature matrix
   feat = readtable(cmp_feat_file, header=true)
   F    = sparse(feat[:compound], feat[:feature], 1.0)
 
   #Am = sparse( X[:compound], X[:target], X[:value])
   Xi = IndexedDF(X, dims)
-  
+
   ## creating data object
   data = RelationData(Xi, feat1 = F, alpha_sample = alpha_sample)
   data.relations[1].test_vec    = probe_vec
@@ -492,6 +492,6 @@ function load_mf1c(;ic50_file     = "chembl_19_mf1c/chembl-IC50-346targets.csv",
       normalizeFeatures!(data.entities[1])
     end
   end
-  
+
   return data
 end

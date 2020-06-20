@@ -3,7 +3,7 @@ using DataFrames
 export IndexedDF, getData, getCount, removeSamples, getValues, valueMean
 export FastIDF
 
-type IndexedDF
+mutable struct IndexedDF
   df::DataFrame
   index::Vector{Vector{Vector{Int64}}}
 
@@ -43,7 +43,7 @@ getCount(idf::IndexedDF, mode::Integer, i::Integer) = length( idf.index[mode][i]
 getI(idf::IndexedDF, mode::Integer, i::Integer)     = idf.index[mode][i]
 
 ## FastIDF used in sampling of latent variables
-type FastIDF{Ti,Tv}
+mutable struct FastIDF{Ti,Tv}
   ids::Matrix{Ti}
   values::Vector{Tv}
   index::Vector{Vector{Vector{Int64}}}

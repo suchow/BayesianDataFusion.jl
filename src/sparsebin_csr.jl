@@ -3,14 +3,14 @@ using Compat
 
 ###################### SparseBinMatrixCSR #######################
 
-type SparseBinMatrixCSR
+mutable struct SparseBinMatrixCSR
   m::Int
   n::Int
   col_ind::Vector{Int32}
   row_ptr::Vector{Int32}
 end
 
-@compat type ParallelBinCSR
+mutable struct ParallelBinCSR
   m::Int
   n::Int
   pids::Vector{Int64}
