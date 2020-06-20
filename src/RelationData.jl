@@ -2,7 +2,7 @@ using DataFrames
 using Compat
 
 include("IndexedDF.jl")
-typealias SparseMatrix SparseMatrixCSC{Float64, Int64}
+SparseMatrix = SparseMatrixCSC{Float64, Int64}
 
 export RelationData, addRelation!
 export Relation, numData, numTest, assignToTest!, setTest!
