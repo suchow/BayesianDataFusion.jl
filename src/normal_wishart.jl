@@ -4,7 +4,7 @@ using PDMats
 
 using LinearAlgebra
 
-immutable NormalWishart <: Distribution
+struct NormalWishart <: ContinuousMultivariateDistribution
     dim::Int
     zeromean::Bool
     mu::Vector{Float64}
