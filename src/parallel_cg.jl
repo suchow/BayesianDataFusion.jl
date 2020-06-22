@@ -17,7 +17,7 @@ end
 nonshared(A) = A
 
 ######### cg code ##########
-function normsq{T}(x::Vector{T})
+function normsq(x::Vector{T}) where T
   s = zero(T)
   @inbounds @simd for i=1:length(x)
     s += x[i]*x[i]
@@ -25,7 +25,7 @@ function normsq{T}(x::Vector{T})
   s
 end
 
-norm2{T}(x::Vector{T}) = sqrt(normsq(x))
+norm2(x::Vector{T}) where T = sqrt(normsq(x))
 
 function prod_add!(p, mult, r)
   @inbounds @simd for i=1:length(p)

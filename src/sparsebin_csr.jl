@@ -46,7 +46,7 @@ function show(io::IO, csr::SparseBinMatrixCSR)
 end
 
 import Base.A_mul_B!
-function A_mul_B!{Tx}(y::AbstractArray{Tx,1}, A::SparseBinMatrixCSR, x::AbstractArray{Tx,1})
+function A_mul_B!(y::AbstractArray{Tx,1}, A::SparseBinMatrixCSR, x::AbstractArray{Tx,1}) where Tx
     A.n == length(x) || throw(DimensionMismatch("A.n=$(A.n) must equal length(x)=$(length(x))"))
     A.m == length(y) || throw(DimensionMismatch("A.m=$(A.m) must equal length(y)=$(length(y))"))
     zro = zero(Tx)
@@ -75,7 +75,7 @@ function ParallelBinCSR(rows::Vector{Int32}, cols::Vector{Int32}, pids::Vector{I
   return pcsr
 end
 
-function A_mul_B!{Tx}(y::SharedArray{Tx,1}, A::ParallelBinCSR, x::SharedArray{Tx,1})
+function A_mul_B!(y::SharedArray{Tx,1}, A::ParallelBinCSR, x::SharedArray{Tx,1}) where Tx
   A.n == length(x) || throw(DimensionMismatch("A.n=$(A.n) must equal length(x)=$(length(x))"))
   A.m == length(y) || throw(DimensionMismatch("A.m=$(A.m) must equal length(y)=$(length(y))"))
 
@@ -92,13 +92,13 @@ function A_mul_B!{Tx}(y::SharedArray{Tx,1}, A::ParallelBinCSR, x::SharedArray{Tx
   return nothing
 end
 
-@compat function A_mul_B_part_ref{Tx}(y::SharedArray{Tx,1}, Aref::Future, x::SharedArray{Tx,1}, range::StepRange{Int,Int}, blocksize::Int)
+@compat function A_mul_B_part_ref(y::SharedArray{Tx,1}, Aref::Any, x::SharedArray{Tx,1}, range::StepRange{Int,Int}, blocksize::Int) where Tx
   A = fetch(Aref)::SparseBinMatrixCSR
   A_mul_B_range!(y, A, x, range, blocksize)
   return nothing
 end
 
-function A_mul_B_range!{Tx}(y::AbstractArray{Tx,1}, A::SparseBinMatrixCSR, x::AbstractArray{Tx,1}, range, blocksize::Int)
+function A_mul_B_range!(y::AbstractArray{Tx,1}, A::SparseBinMatrixCSR, x::AbstractArray{Tx,1}, range, blocksize::Int) where Tx
     A.n == length(x) || throw(DimensionMismatch("A.n=$(A.n) must equal length(x)=$(length(x))"))
     A.m == length(y) || throw(DimensionMismatch("A.m=$(A.m) must equal length(y)=$(length(y))"))
     zro = zero(Tx)

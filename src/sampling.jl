@@ -141,7 +141,7 @@ function sample_lambda_beta(β::Matrix{Float64}, Lambda_u::Matrix{Float64}, ν::
   return rand(Gamma(b, c))
 end
 
-function grab_col{Tv,Ti}(A::SparseMatrixCSC{Tv,Ti}, col::Integer)
+function grab_col(A::SparseMatrixCSC{Tv,Ti}, col::Integer) where {Tv, Ti}
   r = A.colptr[col]:A.colptr[col+1]-1
   A.rowval[r], A.nzval[r]
 end
