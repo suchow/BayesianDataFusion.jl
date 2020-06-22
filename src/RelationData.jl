@@ -1,6 +1,7 @@
 using DataFrames
 using Compat
 using Printf
+using Distributed
 
 include("IndexedDF.jl")
 SparseMatrix = SparseMatrixCSC{Float64, Int64}
