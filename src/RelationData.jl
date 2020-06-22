@@ -290,7 +290,7 @@ function rep_int(x, times)
   out = zeros(eltype(x), sum(times))
   idx = 1
   for i in 1:size(x,1)
-    out[idx : idx+times[i]-1] = x[i]
+    out[idx : idx+times[i]-1] .= x[i]
     idx += times[i]
   end
   return out
