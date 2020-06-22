@@ -99,8 +99,8 @@ function toStr(en::Entity)
     en.name[1:min(3,end)],
     "[",
        @sprintf("U:%6.2f", vecnorm(en.model.sample)),
-       hasFeatures(en) ? @sprintf(" β:%3.2f", vecnorm(en.model.beta)) :"",
-       hasFeatures(en) && en.lambda_beta_sample ? @sprintf(" λ=%1.1f", en.lambda_beta) :"",
+       hasFeatures(en) ? @sprintf(" β:%3.2f", vecnorm(en.model.beta)) : "",
+       hasFeatures(en) && en.lambda_beta_sample ? @sprintf(" λ=%1.1f", en.lambda_beta) : "",
     "]")
 end
 
@@ -184,7 +184,7 @@ function toStr(r::Relation)
     r.name[1:min(4,end)],
     "[",
        @sprintf("α=%2.1f", r.model.alpha),
-       hasFeatures(r) ? @sprintf(" β:%2.1f", vecnorm(r.model.beta)) :"",
+       hasFeatures(r) ? @sprintf(" β:%2.1f", vecnorm(r.model.beta)) : "",
     "]")
 end
 
@@ -258,9 +258,9 @@ mutable struct RelationData
   RelationData() = new( Entity[], Relation[] )
 
   function RelationData(Am::IndexedDF; feat1=zeros(0,0), feat2=zeros(0,0), entity1="E1", entity2="E2", relation="Rel", ntest=0, class_cut=log10(200), alpha=5.0, alpha_sample=false, lambda_beta=1.0)
-    r  = alpha_sample ?Relation(Am, relation, class_cut) :Relation(Am, relation, class_cut, alpha)
-    e1 = Entity{isempty(feat1) ? Any :typeof(feat1), Relation}( feat1, [r], size(r,1), entity1, lambda_beta )
-    e2 = Entity{isempty(feat2) ? Any :typeof(feat2), Relation}( feat2, [r], size(r,2), entity2, lambda_beta )
+    r  = alpha_sample ? Relation(Am, relation, class_cut) : Relation(Am, relation, class_cut, alpha)
+    e1 = Entity{isempty(feat1) ? Any : typeof(feat1), Relation}( feat1, [r], size(r,1), entity1, lambda_beta )
+    e2 = Entity{isempty(feat2) ? Any : typeof(feat2), Relation}( feat2, [r], size(r,2), entity2, lambda_beta )
     if ! isempty(feat1) && size(feat1,1) != size(r,1)
       throw(ArgumentError("Number of rows in feat1 $(size(feat1,1)) must equal number of rows in the relation $(size(Am,1))"))
     end
@@ -412,7 +412,7 @@ import Base.show
 function show(io::IO, rd::RelationData)
   println(io, "[Relations]")
   for r in rd.relations
-    @printf(io, "%10s: %s, #known = %d, #test = %d, α = %s", r.name, join([e.name for e in r.entities], "--"), numData(r), numTest(r), r.model.alpha_sample ?"sample" :@sprintf("%.2f", r.model.alpha))
+    @printf(io, "%10s: %s, #known = %d, #test = %d, α = %s", r.name, join([e.name for e in r.entities], "--"), numData(r), numTest(r), r.model.alpha_sample ? "sample" : @sprintf("%.2f", r.model.alpha))
     hasFeatures(r) && @printf(io, ", #feat = %d", size(r.F,2))
     @printf(io, "\n")
   end
@@ -422,7 +422,7 @@ function show(io::IO, rd::RelationData)
     @printf(io, "%10s: %6d ", en.name, en.count)
     if hasFeatures(en)
       print(io, "with ", size(en.F,2), " features (λ = ",
-                en.lambda_beta_sample ? "sample" :@sprintf("%1.1f", en.lambda_beta),")")
+                en.lambda_beta_sample ? "sample" : @sprintf("%1.1f", en.lambda_beta),")")
     else
       print(io, "with no features")
     end
@@ -432,7 +432,7 @@ end
 
 function show(io::IO, r::Relation)
   print(io, "[Relation]")
-  @printf(io, " %s: %s, #known = %d, #test = %d, α = %s", r.name, join([e.name for e in r.entities], "--"), numData(r), numTest(r), r.model.alpha_sample ?"sample" :@sprintf("%.2f", r.model.alpha))
+  @printf(io, " %s: %s, #known = %d, #test = %d, α = %s", r.name, join([e.name for e in r.entities], "--"), numData(r), numTest(r), r.model.alpha_sample ? "sample" : @sprintf("%.2f", r.model.alpha))
   hasFeatures(r) && @printf(io, ", #feat = %d", size(r.F,2))
 end
 
@@ -441,7 +441,7 @@ function show(io::IO, en::Entity)
   @printf(io, " %s: %6d ", en.name, en.count)
   if hasFeatures(en)
     print(io, "with ", size(en.F,2), " features (λ = ",
-              en.lambda_beta_sample ? "sample" :@sprintf("%1.1f", en.lambda_beta),")")
+              en.lambda_beta_sample ? "sample" : @sprintf("%1.1f", en.lambda_beta),")")
   else
     print(io, "with no features")
   end
