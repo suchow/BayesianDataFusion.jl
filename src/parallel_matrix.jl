@@ -6,6 +6,7 @@ export AtA_mul_B!
 
 using Compat
 using LinearAlgebra
+using SharedArrays
 
 mutable struct SparseBinMatrix
   m::Int64
