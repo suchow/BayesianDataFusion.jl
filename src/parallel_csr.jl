@@ -2,6 +2,8 @@ export pmult, imult
 export psparse, ParallelSparseMatrix
 export SparseMatrixCSR, sparse_csr
 
+using LinearAlgebra
+
 mutable struct ParallelSparseMatrix{TF}
   F::TF
   refs::Vector{Any}
@@ -15,11 +17,9 @@ function psparse(F, procs)
     procs)
 end
 
-import Base.At_mul_B
 import Base.isempty
 import Base.size
 import Base.eltype
-import Base.Ac_mul_B
 
 At_mul_B(A::ParallelSparseMatrix, U::AbstractMatrix) = pmult(size(A.F,2), A.refs, U, A.procs, imult)
 *(A::ParallelSparseMatrix, U::AbstractMatrix)        = pmult(size(A.F,1), A.refs, U, A.procs, mult)

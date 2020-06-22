@@ -1,5 +1,6 @@
 export SparseBinMatrixCSR, ParallelBinCSR
 using Compat
+using LinearAlgebra
 
 ###################### SparseBinMatrixCSR #######################
 
@@ -45,7 +46,6 @@ function show(io::IO, csr::SparseBinMatrixCSR)
   println(io, "$(csr.m) x $(csr.m) binary sparse matrix (CSR) with $(length(csr.col_ind)) entries.")
 end
 
-import Base.A_mul_B!
 function A_mul_B!(y::AbstractArray{Tx,1}, A::SparseBinMatrixCSR, x::AbstractArray{Tx,1}) where Tx
     A.n == length(x) || throw(DimensionMismatch("A.n=$(A.n) must equal length(x)=$(length(x))"))
     A.m == length(y) || throw(DimensionMismatch("A.m=$(A.m) must equal length(y)=$(length(y))"))

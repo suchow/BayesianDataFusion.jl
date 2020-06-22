@@ -5,6 +5,7 @@ export sort_hilbert
 export AtA_mul_B!
 
 using Compat
+using LinearAlgebra
 
 mutable struct SparseBinMatrix
   m::Int64
@@ -230,9 +231,6 @@ size(X::ParallelSBM) = (X.m, X.n)
 size(X::ParallelSBM, d::Int) = d==1 ? X.m : X.n
 isempty(X::ParallelSBM)      = X.m == 0 || X.n == 0
 
-import Base.A_mul_B!
-import Base.At_mul_B!
-import Base.At_mul_B
 import Base.*
 
 ## multiplication: y = A * x
