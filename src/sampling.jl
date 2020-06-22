@@ -1,4 +1,3 @@
-using Iterators
 using Distributions
 using PDMats
 
