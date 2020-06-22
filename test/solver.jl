@@ -1,5 +1,5 @@
 using BayesianDataFusion
-using Base.Test
+using Test
 
 X = rand(1000, 50)
 y = rand(50, 3)

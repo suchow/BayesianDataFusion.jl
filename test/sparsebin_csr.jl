@@ -1,5 +1,5 @@
 using BayesianDataFusion
-using Base.Test
+using Test
 
 rows = Int32[ 1:200; 151:350 ]
 cols = Int32[ 151:350; 1:2:399 ]

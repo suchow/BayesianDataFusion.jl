@@ -1,6 +1,6 @@
 using BayesianDataFusion
 #using BayesianDataFusion.ParallelMatrix
-using Base.Test
+using Test
 
 using Compat
 
