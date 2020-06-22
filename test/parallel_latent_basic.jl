@@ -1,5 +1,5 @@
 using BayesianDataFusion
-using Base.Test
+using Test
 
 X = sprand(50, 20, 0.1)
 

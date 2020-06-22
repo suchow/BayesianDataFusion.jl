@@ -1,5 +1,5 @@
 using BayesianDataFusion
-using Base.Test
+using Test
 
 X = sprand(50, 100, 0.1)
 Xr = sparse_csr(X)

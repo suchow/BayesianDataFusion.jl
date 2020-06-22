@@ -1,5 +1,5 @@
 using BayesianDataFusion
-using Base.Test
+using Test
 
 using Compat
 

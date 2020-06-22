@@ -1,5 +1,5 @@
 using BayesianDataFusion
-using Base.Test
+using Test
 
 ## testing column dot
 X1 = rand(5, 10)
