@@ -207,7 +207,7 @@ function assignToTest!(r::Relation, test_id::Vector{Int64})
   if hasFeatures(r)
     r.test_F = r.F[test_id,:]
     train    = ones(Bool, size(r.F, 1) )
-    train[test_id] = false
+    train[test_id] .= false
     r.F      = r.F[train,:]
   end
   nothing
