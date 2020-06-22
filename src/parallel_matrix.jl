@@ -234,10 +234,10 @@ isempty(X::ParallelSBM)      = X.m == 0 || X.n == 0
 import Base.*
 
 ## multiplication: y = A * x
-*{Tx}(A::SparseBinMatrix, x::AbstractArray{Tx,1}) = (y = zeros(Tx, A.m); A_mul_B!(y, A, x); y)
-*{Tx}(A::ParallelSBM,     x::AbstractArray{Tx,1}) = (y = zeros(Tx, A.m); A_mul_B!(y, A, x); y)
+(A::SparseBinMatrix, x::AbstractArray{Tx,1}) where Tx = (y = zeros(Tx, A.m); A_mul_B!(y, A, x); y)
+(A::ParallelSBM,     x::AbstractArray{Tx,1}) where Tx = (y = zeros(Tx, A.m); A_mul_B!(y, A, x); y)
 
-function A_mul_B!{Tx}(y::AbstractArray{Tx,1}, A::SparseBinMatrix, x::AbstractArray{Tx,1})
+function A_mul_B!(y::AbstractArray{Tx,1}, A::SparseBinMatrix, x::AbstractArray{Tx,1}) where Tx
     A.n == length(x) || throw(DimensionMismatch("A.n=$(A.n) must equal length(x)=$(length(x))"))
     A.m == length(y) || throw(DimensionMismatch("A.m=$(A.m) must equal length(y)=$(length(y))"))
     fill!(y, zero(Tx) )
