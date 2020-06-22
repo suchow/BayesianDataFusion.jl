@@ -42,7 +42,7 @@ end
 
 mutable struct Entity{FT,R}
   F::FT
-  FF
+  FF::Matrix
   use_FF::Bool
   Frefs::Vector{Future}
   relations::Vector{R}
