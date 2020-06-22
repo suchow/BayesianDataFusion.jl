@@ -45,7 +45,7 @@ function macau_sgd(data::RelationData;
 
 end
 
-function create_minibatches{Ti,Tv}(uid::Vector{Ti}, vid::Vector{Ti}, val::Vector{Tv}, bsize::Int)
+function create_minibatches(uid::Vector{Ti}, vid::Vector{Ti}, val::Vector{Tv}, bsize::Int) where {Ti, Tv}
   perm = randperm(length(uid))
   batches = SparseMatrixCSC{Tv,Ti}[]
   umax = maximum(uid)
