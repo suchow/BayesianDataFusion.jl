@@ -195,8 +195,8 @@ function macau(data::RelationData;
     err_avg  = mean(correct)
     err      = mean(rel.test_label .== (probe_rat .< rel.class_cut))
 
-    clamped_rat     = isempty(clamp) ?probe_rat     :makeClamped(probe_rat, clamp)
-    clamped_rat_all = isempty(clamp) ?probe_rat_all :makeClamped(probe_rat_all, clamp)
+    clamped_rat     = isempty(clamp) ? probe_rat     : makeClamped(probe_rat, clamp)
+    clamped_rat_all = isempty(clamp) ? probe_rat_all : makeClamped(probe_rat_all, clamp)
 
     rmse_avg = haveTest ? sqrt(mean( (rel.test_vec[:,end] - clamped_rat_all) .^ 2 )) : NaN
     rmse     = haveTest ? sqrt(mean( (rel.test_vec[:,end] - clamped_rat) .^ 2 ))     : NaN
@@ -222,7 +222,7 @@ function macau(data::RelationData;
   result["ROC"]         = roc_avg
   if rmse_train
     ## calculating prediction on training set
-    train_cl = isempty(clamp) ?train_rat_all :makeClamped(train_rat_all, clamp)
+    train_cl = isempty(clamp) ? train_rat_all : makeClamped(train_rat_all, clamp)
     result["RMSE_train"]  = sqrt(mean( (getValues(data.relations[1].data) - train_cl) .^ 2 ))
   end
   if full_prediction
