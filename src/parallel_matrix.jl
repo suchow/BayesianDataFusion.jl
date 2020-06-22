@@ -156,10 +156,10 @@ function copyto(F::ParallelSBM, pids::Vector{Int})
 end
 
 
-sem_init(x::SharedArray)    = ccall(:sem_init, Cint, (Ptr{Void}, Cint, Cuint), x, 1, one(UInt32))
-sem_wait(x::SharedArray)    = ccall(:sem_wait, Cint, (Ptr{Void},), x)
-sem_trywait(x::SharedArray) = ccall(:sem_trywait, Cint, (Ptr{Void},), x)
-sem_post(x::SharedArray)    = ccall(:sem_post, Cint, (Ptr{Void},), x)
+sem_init(x::SharedArray)    = ccall(:sem_init, Cint, (Ptr{Nothing}, Cint, Cuint), x, 1, one(UInt32))
+sem_wait(x::SharedArray)    = ccall(:sem_wait, Cint, (Ptr{Nothing},), x)
+sem_trywait(x::SharedArray) = ccall(:sem_trywait, Cint, (Ptr{Nothing},), x)
+sem_post(x::SharedArray)    = ccall(:sem_post, Cint, (Ptr{Nothing},), x)
 
 gmean(x) = prod(x) ^ (1 / length(x))
 pretty(x) = "[" * join([@sprintf("%.3f", i) for i in x], ", ") * "]"
