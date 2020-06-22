@@ -57,7 +57,7 @@ mutable struct Entity{FT,R}
   nu::Float64   ## Hyper-prior for lambda_beta
 
   model::EntityModel
-  @compat Entity(F, relations::Vector{R}, count::Int64, name::AbstractString, lb::Float64=1.0, lb_sample::Bool=true, mu=1.0, nu=1e-3) = new(F, zeros(0,0), false, Future[], relations, count, name, Int[], Vector{Int}[], lb, lb_sample, mu, nu)
+  Entity(F, relations::Vector{R}, count::Int64, name::AbstractString, lb::Float64=1.0, lb_sample::Bool=true, mu=1.0, nu=1e-3) where {FT, R} = new{FT, R}(F, zeros(0,0), false, Future[], relations, count, name, Int[], Vector{Int}[], lb, lb_sample, mu, nu, model)
 end
 
 Entity(name::AbstractString; F=zeros(0,0), lambda_beta=1.0) = Entity{Any,Relation}(F::Any, Relation[], 0, name, lambda_beta)
@@ -311,7 +311,7 @@ function RelationData(r::Relation)
 end
 
 ## computes F * beta
-function F_mul_beta{F}(en::Entity{F,Relation})
+function F_mul_beta(en::Entity{F,Relation}) where {F}
   if ! isempty(en.Frefs)
     return Frefs_mul_B(en.Frefs, en.model.beta)
   else
@@ -320,7 +320,7 @@ function F_mul_beta{F}(en::Entity{F,Relation})
 end
 
 ## computes F' * beta
-function Ft_mul_B{F}(en::Entity{F,Relation}, B::Matrix{Float64})
+function Ft_mul_B(en::Entity{F,Relation}, B::Matrix{Float64}) where {F}
   if ! isempty(en.Frefs)
     return Frefs_t_mul_B(en.Frefs, B)
   else
