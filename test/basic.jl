@@ -1,5 +1,6 @@
 using BayesianDataFusion
 using DataFrames
+using DelimitedFiles
 using SparseArrays
 using Test
 
