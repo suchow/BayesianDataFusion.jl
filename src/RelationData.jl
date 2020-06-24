@@ -1,7 +1,7 @@
-using DataFrames
 using Compat
-using Printf
+using DataFrames
 using Distributed
+using Printf
 using LinearAlgebra
 
 include("IndexedDF.jl")
