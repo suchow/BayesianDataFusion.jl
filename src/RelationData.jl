@@ -59,7 +59,7 @@ mutable struct Entity{FT,R}
   nu::Float64   ## Hyper-prior for lambda_beta
 
   model::EntityModel
-  Entity(F, relations::Vector{R}, count::Int64, name::AbstractString, lb::Float64=1.0, lb_sample::Bool=true, mu=1.0, nu=1e-3) where {FT, R} = new{FT, R}(F, zeros(0,0), false, Future[], relations, count, name, Int[], Vector{Int}[], lb, lb_sample, mu, nu, model)
+  Entity(F::FT, relations::Vector{R}, count::Int64, name::AbstractString, lb::Float64=1.0, lb_sample::Bool=true, mu=1.0, nu=1e-3) where {FT,R} = new{FT,R}(F, zeros(0,0), false, Future[], relations, count, name, Int[], Vector{Int}[], lb, lb_sample, mu, nu)
 end
 
 Entity(name::AbstractString; F=zeros(0,0), lambda_beta=1.0) = Entity(F, Relation[], 0, name, lambda_beta)
