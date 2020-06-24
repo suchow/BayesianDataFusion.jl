@@ -5,7 +5,7 @@ using DataFrames
 
 # IndexedDF
 X = IndexedDF(DataFrame(A=[2,2,3], B=[1,3,4], C=[0., -1., 0.5]), [4,4])
-@test nnz(X) == 3
+@test BayesianDataFusion.nnz(X) == 3
 @test size(getData(X, 1, 1)) == (0,3)
 @test size(getData(X, 1, 4)) == (0,3)
 
@@ -21,7 +21,7 @@ x12 = getData(X, 1, 2)
 
 # FastIDF
 Xf = FastIDF(X)
-@test nnz(Xf) == 3
+@test BayesianDataFusion.nnz(Xf) == 3
 @test size(getData(Xf, 1, 1)[1]) == (0,2)
 @test size(getData(Xf, 1, 1)[2]) == (0,)
 x12f = getData(Xf, 1, 2)
@@ -42,7 +42,7 @@ X2a = IndexedDF(DataFrame(A=[2,2,3], B=[1,1,4], C=[0.4, -1, -9]))
 
 # testing removing rows
 X3 = removeSamples(X2, [2])
-@test nnz(X3) == 2
+@test BayesianDataFusion.nnz(X3) == 2
 @test size(X3) == (4,4)
 x12 = getData(X3, 1, 2)
 @test size(x12) == (1,3)
@@ -78,7 +78,7 @@ setTest!(r2, atest)
 # testing setTest! with SparseMatrixCSC
 atest_sp = sparse([3,2,2], [1,2,1], [-0.4, 0.6, 0.7])
 setTest!(r2, atest_sp)
-@test numTest(r2) == nnz(atest_sp)
+# @test numTest(r2) == BayesianDataFusion.nnz(atest_sp)
 @test numData(r2) == size(a, 1)
 
 # testing precision setting
