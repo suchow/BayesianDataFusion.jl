@@ -1,7 +1,7 @@
 using BayesianDataFusion
-using Test
-
 using DataFrames
+using SparseArrays
+using Test
 
 # IndexedDF
 X = IndexedDF(DataFrame(A=[2,2,3], B=[1,3,4], C=[0., -1., 0.5]), [4,4])
