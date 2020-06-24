@@ -62,7 +62,7 @@ mutable struct Entity{FT,R}
   Entity(F, relations::Vector{R}, count::Int64, name::AbstractString, lb::Float64=1.0, lb_sample::Bool=true, mu=1.0, nu=1e-3) where {FT, R} = new{FT, R}(F, zeros(0,0), false, Future[], relations, count, name, Int[], Vector{Int}[], lb, lb_sample, mu, nu, model)
 end
 
-Entity(name::AbstractString; F=zeros(0,0), lambda_beta=1.0) = Entity{Any,Relation}(F::Any, Relation[], 0, name, lambda_beta)
+Entity(name::AbstractString; F=zeros(0,0), lambda_beta=1.0) = Entity(F, Relation[], 0, name, lambda_beta)
 
 ## initializes the model parameters
 function initModel!(entity::Entity, num_latent::Int64; lambda_beta::Float64 = NaN)
