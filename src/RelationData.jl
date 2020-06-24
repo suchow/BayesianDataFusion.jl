@@ -262,8 +262,8 @@ mutable struct RelationData
 
   function RelationData(Am::IndexedDF; feat1=zeros(0,0), feat2=zeros(0,0), entity1="E1", entity2="E2", relation="Rel", ntest=0, class_cut=log10(200), alpha=5.0, alpha_sample=false, lambda_beta=1.0)
     r  = alpha_sample ? Relation(Am, relation, class_cut) : Relation(Am, relation, class_cut, alpha)
-    e1 = Entity{isempty(feat1) ? Any : typeof(feat1), Relation}( feat1, [r], size(r,1), entity1, lambda_beta )
-    e2 = Entity{isempty(feat2) ? Any : typeof(feat2), Relation}( feat2, [r], size(r,2), entity2, lambda_beta )
+    e1 = Entity( feat1, [r], size(r,1), entity1, lambda_beta )
+    e2 = Entity( feat2, [r], size(r,2), entity2, lambda_beta )
     if ! isempty(feat1) && size(feat1,1) != size(r,1)
       throw(ArgumentError("Number of rows in feat1 $(size(feat1,1)) must equal number of rows in the relation $(size(Am,1))"))
     end
