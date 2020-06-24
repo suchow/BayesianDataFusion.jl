@@ -334,8 +334,8 @@ end
 function reset!(data::RelationData, num_latent; lambda_beta=NaN, compute_ff_size = 6500, cg_pids=Int[myid()])
   for en in data.entities
     initModel!(en, num_latent, lambda_beta = lambda_beta)
-    en.modes = Int64[ find(en2 -> en2 == en, r.entities)[1] for r in en.relations ]
-    en.modes_other = Vector{Int64}[ find(en2 -> en2 != en, r.entities) for r in en.relations ]
+    en.modes = Int64[ findall(en2 -> en2 == en, r.entities)[1] for r in en.relations ]
+    en.modes_other = Vector{Int64}[ findall(en2 -> en2 != en, r.entities) for r in en.relations ]
     if hasFeatures(en)
       if size(en.F, 2) <= compute_ff_size
         en.FF = full(At_mul_B(en.F, en.F))
