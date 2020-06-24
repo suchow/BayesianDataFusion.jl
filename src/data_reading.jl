@@ -1,3 +1,5 @@
+using DelimitedFiles
+
 export read_ecfp, read_sparse, read_rowcol
 export read_binary_int32, filter_rare, write_binary_int32
 export write_binary_matrix
