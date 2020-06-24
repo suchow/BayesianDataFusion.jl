@@ -129,8 +129,8 @@ function ParallelSBM(rows::Vector{Int32}, cols::Vector{Int32}, pids::Vector{Int}
   mblock_counts = vec(sum(mblock_grid, 2))
   nblock_counts = vec(sum(nblock_grid, 2))
   for i in 1:length(pids)
-    mb = block_order(mblock_counts, find(mblock_grid[:,i]))
-    nb = block_order(nblock_counts, find(nblock_grid[:,i]))
+    mb = block_order(mblock_counts, findall(mblock_grid[:,i]))
+    nb = block_order(nblock_counts, findall(nblock_grid[:,i]))
     pl_ref = @spawnat pids[i] ParallelLogic(mblocks, nblocks, mb, nb, zeros(m), zeros(n), ps.tmp, ps.sems )
     push!(ps.logic, pl_ref)
   end
