@@ -114,7 +114,7 @@ end
 
 function ConditionalNormalWishart(U::Matrix{Float64}, mu::Vector{Float64}, beta_0::Real, Tinv::Matrix{Float64}, nu::Real)
   N  = size(U, 2)
-  NU = sum(U, 2)
+  NU = sum(U, dims=2)
   NS = U * U'
 
   nu_N   = nu + N
