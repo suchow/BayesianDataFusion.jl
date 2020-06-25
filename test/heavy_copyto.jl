@@ -30,7 +30,7 @@ beta = BayesianDataFusion.cg_AtA(A2, x, 0.5)
 Asp  = sparse(rows, cols, 1.0)
 AA   = full(Asp' * Asp)
 beta_e = (AA + eye(length(x))*0.5) \ x
-@test_approx_eq beta beta_e
+@test beta ≈ beta_e
 
 
 ########     remote cg     #########
@@ -41,13 +41,13 @@ beta2 = fetch(@spawnat 2 BayesianDataFusion.cg_AtA_ref(Fref, x, 0.75, 1e-6, leng
 Asp   = sparse(rows, cols, 1.0)
 AA    = full(Asp' * Asp)
 beta2_e = (AA + eye(length(x))*0.75) \ x
-@test_approx_eq beta2 beta2_e
+@test beta2 ≈ beta2_e
 
 ########    solve_cg2 test     ########
 rhs = rand(size(A,2), 3)
 Y   = BayesianDataFusion.solve_cg2(RemoteRef[Fref], rhs, 0.5)
 Ye  = (AA + eye(size(rhs,1))*0.5) \ rhs
-@test_approx_eq Y Ye
+@test Y ≈ Ye
 
 
 ########  Frefs_mul_B on SparseMatrixCSC  #########
@@ -56,17 +56,17 @@ Asp_ref1 = @spawnat 2 fetch(Asp)
 Asp_ref2 = @spawnat 3 fetch(Asp)
 Ym  = BayesianDataFusion.Frefs_mul_B(RemoteRef[Asp_ref1, Asp_ref2], Xm)
 Yme = Asp * Xm
-@test_approx_eq Ym Yme
+@test Ym ≈ Yme
 
 ########  Frefs_mul_B on ParallelSBM  #########
 Ym_psbm = BayesianDataFusion.Frefs_mul_B(RemoteRef[Fref], Xm)
-@test_approx_eq Ym_psbm Yme
+@test Ym_psbm ≈ Yme
 
 ########  Frefs_t_mul_B on SparseMatrixCSC  #########
 Xt  = rand(size(Asp,1), 5)
 Yt  = BayesianDataFusion.Frefs_t_mul_B(RemoteRef[Fref], Xt)
 Yte = At_mul_B(Asp, Xt)
-@test_approx_eq Yt Yte
+@test Yt ≈ Yte
 
 ########  macau with several SparseMatrixCSC  #######
 Y    = sprand(20, 10, 0.2)

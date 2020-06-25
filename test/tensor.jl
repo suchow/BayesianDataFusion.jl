@@ -28,4 +28,4 @@ Yhat = pred_all(rd.relations[1])
 yprod   = rd.entities[1].model.sample[:,4]
 yprod .*= rd.entities[2].model.sample[:,2]
 yprod .*= rd.entities[3].model.sample[:,1]
-@test_approx_eq Yhat[4,2,1] sum(yprod)+rd.relations[1].model.mean_value
+@test Yhat[4,2,1] ≈ sum(yprod)+rd.relations[1].model.mean_value
