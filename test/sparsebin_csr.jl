@@ -19,7 +19,7 @@ A_mul_B!(y2, bin, x)
 
 A = sparse(rows, cols, 1.0)
 
-@test_approx_eq y  A*x
-@test_approx_eq y2 A*x
+@test y ≈ A*x
+@test y2 ≈ A*x
 
 ######### Parallel CSR ###########

@@ -14,8 +14,8 @@ fp  = psparse(X, workers())
 Z1p = At_mul_B(fp, Y1)
 Z2p = fp * Y2
 
-@test_approx_eq Z1 Z1p
-@test_approx_eq Z2 Z2p
+@test Z1 ≈ Z1p
+@test Z2 ≈ Z2p
 
 W  = sprand(50, 10, 0.1)
 rd = RelationData(W, class_cut = 0.5, feat1 = fp)
@@ -32,8 +32,8 @@ fp2 = psparse(sparse_csr(X), workers())
 Z1r = At_mul_B(fp2, Y1)
 Z2r = fp2 * Y2
 
-@test_approx_eq Z1 Z1r
-@test_approx_eq Z2 Z2r
+@test Z1 ≈ Z1r
+@test Z2 ≈ Z2r
 
 rd2 = RelationData(W, class_cut = 0.5, feat1 = fp2)
 assignToTest!(rd2.relations[1], 2)

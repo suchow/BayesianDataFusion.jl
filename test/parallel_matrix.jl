@@ -57,8 +57,8 @@ B = sparse(rows, cols, 1.0)
 y_e = B*x
 ydirect = A * x
 
-@test_approx_eq y       y_e
-@test_approx_eq ydirect y_e
+@test y ≈ y_e
+@test ydirect ≈ y_e
 
 ## test error if row and col are different sizes
 @test_throws DimensionMismatch SparseBinMatrix( [rows; one(Int32)], cols)
@@ -72,24 +72,24 @@ ctimes = BayesianDataFusion.A_mul_B!_time(y, A, x, 3)
 x9  = rand(A.m)
 y9  = At_mul_B(A, x9)
 y9e = At_mul_B(B, x9)
-@test_approx_eq y9 y9e
-@test_approx_eq At_mul_B(sbm, x9) y9e
+@test y9 ≈ y9e
+@test At_mul_B(sbm, x9) ≈ y9e
 
 ## testing AtA_mul_B!
 xn = SharedArray(Float64, size(A, 2))
 AtA_mul_B!(xn, A, x, 0.1)
 xn_true = B' * B * x + 0.1 * x
-@test_approx_eq xn xn_true
+@test xn ≈ xn_true
 
 ## testing AtA_mul_B! for dense matrix
 Bxn = zeros(Float64, size(A,2))
 AtA_mul_B!(Bxn, B, x, 0.1)
-@test_approx_eq Bxn xn_true
+@test Bxn ≈ xn_true
 
 ## AtA_mul_B! for SparseBinMatrix
 sxn = zeros(Float64, size(sbm,2))
 AtA_mul_B!(sxn, sbm, x, 0.1)
-@test_approx_eq sxn xn_true
+@test sxn ≈ xn_true
 
 ## making sure SparseBinMatrix with Int64 input works
 sbm64 = SparseBinMatrix(convert(Vector{Int64}, rows), convert(Vector{Int64}, cols))
@@ -106,7 +106,7 @@ ctimes = BayesianDataFusion.A_mul_B!_time(y, Abal, x, 3)
 #beta = BayesianDataFusion.parallel_cg(cg, x)[1]
 beta = BayesianDataFusion.cg_AtA(A, x, 0.5)
 beta_true = (B'*B + eye(size(A,2))*0.5) \ x
-@test_approx_eq beta beta_true
+@test beta ≈ beta_true
 
 
 ######## testing nonshared #########

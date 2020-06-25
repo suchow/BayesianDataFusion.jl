@@ -110,14 +110,14 @@ result = macau(rd, burnin = 10, psamples = 10, verbose = false)
 # testing pred_all
 Yhat = pred_all(rd.relations[1])
 @test size(Yhat) == (15, 10)
-@test_approx_eq Yhat[2,3] (rd.entities[1].model.sample[:,2]' * rd.entities[2].model.sample[:,3])[1] + rd.relations[1].model.mean_value
+@test Yhat[2,3] ≈ (rd.entities[1].model.sample[:,2]' * rd.entities[2].model.sample[:,3])[1] + rd.relations[1].model.mean_value
 
 # predict all
 result1 = macau(rd, burnin = 10, psamples = 10, verbose = false, full_prediction = true)
 @test size(result1["predictions_full"]) == (15, 10)
 x1 = result1["predictions"][1, 1:2]
 y1 = result1["predictions"][:pred][1]
-@test_approx_eq result1["predictions_full"][x1[1], x1[2]] y1
+@test result1["predictions_full"][x1[1], x1[2]] ≈ y1
 
 # rmse_train works
 result1a = macau(rd, burnin = 1, psamples = 2, verbose = false, rmse_train = true)
@@ -137,7 +137,7 @@ try
   @test 5         == size(e1_sample,1) ## number of latents
   e1_sample2 = read_binary_float32("$tmpdir/macau-runtest-e1-10.binary")
   e1_last    = convert(Array{Float32}, rd2.entities[1].model.sample)
-  @test_approx_eq   e1_sample2 e1_last
+  @test e1_sample2 ≈ e1_last
 finally
   rm(tmpdir, recursive = true)
 end
@@ -156,7 +156,7 @@ try
   @test 5         == size(e1_sample,1) ## number of latents
   e1_sample2 = readdlm("$tmpdir/macau-runtest-e1-10.csv", ',')
   e1_last    = convert(Array{Float32}, rd2.entities[1].model.sample)
-  @test_approx_eq   e1_sample2 e1_last
+  @test e1_sample2 ≈ e1_last
 finally
   rm(tmpdir, recursive = true)
 end
@@ -172,4 +172,4 @@ ytrain_hat = pred(rd.relations[1])
 row = rd.relations[1].data.df[1,1]
 col = rd.relations[1].data.df[1,2]
 y1 = sum(rd.entities[1].model.sample[:,row] .* rd.entities[2].model.sample[:,col]) + valueMean(rd.relations[1].data)
-@test_approx_eq y1 ytrain_hat[1]
+@test y1 ≈ ytrain_hat[1]

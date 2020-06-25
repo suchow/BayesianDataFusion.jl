@@ -4,7 +4,7 @@ using Test
 ## testing column dot
 X1 = rand(5, 10)
 X2 = rand(5, 3)
-@test_approx_eq BayesianDataFusion.column_dot(X1, X2, 8, 1) dot(X1[:,8], X2[:,1])
+@test BayesianDataFusion.column_dot(X1, X2, 8, 1) ≈ dot(X1[:,8], X2[:,1])
 
 Y  = sprand(15,10, 0.2)
 rd = RelationData(Y, class_cut = 0.5)

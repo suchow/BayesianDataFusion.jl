@@ -29,7 +29,7 @@ try
   @test 3 == size(beta_sample1, 1) ## number of features
   beta_sample2 = read_binary_float32("$tmpdir/macau-betasaving-A-10.beta.binary")
   beta_last    = convert(Array{Float32}, rd.entities[1].model.beta)
-  @test_approx_eq   beta_sample2 beta_last
+  @test beta_sample2 ≈ beta_last
 finally
   rm(tmpdir, recursive = true)
 end
