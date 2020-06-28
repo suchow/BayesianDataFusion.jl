@@ -6,12 +6,6 @@ using Test
 
 using Compat
 
-######### test hilbert sorting #######
-rows = [1:4; 1:4; 1:4; 1:4]
-cols = [1,1,1,1, 2,2,2,2, 3,3,3,3, 4,4,4,4]
-
-r2, c2 = sort_hilbert(rows, cols)
-
 
 ######### test block order ########
 @test BayesianDataFusion.block_order( [1, 2, 5, 4, 3, 1], 2:3 ) == [3, 2]
