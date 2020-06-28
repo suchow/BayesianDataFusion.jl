@@ -265,7 +265,7 @@ function computePotential(uid::Vector, vid::Vector, val::Vector, r::Relation)
   energy *= alpha / 2
 
   ## Priors
-  ## sum(u_i' * Lambda_u * u_i) = trace(Lambda_u * U * U')
+  ## sum(u_i' * Lambda_u * u_i) = tr(Lambda_u * U * U')
   energy += sum(Umodel.Lambda .* (Usample * Usample')) / 2
   energy += sum(Vmodel.Lambda .* (Vsample * Vsample')) / 2
 
