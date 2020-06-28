@@ -29,7 +29,7 @@ result = macau(rd, burnin = 2, psamples = 2, num_latent=5, verbose=false)
 
 
 ########### parallel sparse with CSR ###########
-fp2 = psparse(sparse_csr(X), workers())
+fp2 = psparse(SparseMatrixCSC(X'), workers())
 
 Z1r = transpose(fp2) * Y1
 Z2r = fp2 * Y2
