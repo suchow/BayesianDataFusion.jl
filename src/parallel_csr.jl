@@ -32,6 +32,7 @@ eltype(A::ParallelSparseMatrix)       = eltype(A.F)
 Ac_mul_B(A::ParallelSparseMatrix, B::ParallelSparseMatrix) = Ac_mul_B(A.F, B.F)
 At_mul_B(A::ParallelSparseMatrix, B::ParallelSparseMatrix) = At_mul_B(A.F, B.F)
 
+A_mul_Bt(A, B) = A * B'
 
 ###### CSR matrix ######
 
