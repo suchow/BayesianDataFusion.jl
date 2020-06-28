@@ -43,7 +43,7 @@ function macau_hmc(data::RelationData;
   mean_value = mean(df[:,end])
   uid = convert(Vector{Int32}, df[:,1])
   vid = convert(Vector{Int32}, df[:,2])
-  val = convert(Array, df[:,3]) - mean_value
+  val = convert(Array, df[:,3]) .- mean_value
   Udata = sparse(vid, uid, val, data.entities[2].count, data.entities[1].count)
   Vdata = Udata'
 
