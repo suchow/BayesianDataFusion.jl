@@ -1,9 +1,12 @@
+
+using Base
 using Compat
 using DataFrames
 using Distributed
 using Printf
 using LinearAlgebra
 using SparseArrays
+using StatsBase
 
 include("IndexedDF.jl")
 SparseMatrix = SparseMatrixCSC{Float64, Int64}

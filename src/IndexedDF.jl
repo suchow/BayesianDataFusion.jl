@@ -1,7 +1,7 @@
 using DataFrames
 using SparseArrays
 
-export IndexedDF, nnz, getData, getCount, removeSamples, getValues, valueMean
+export IndexedDF, getData, getCount, removeSamples, getValues, valueMean
 export FastIDF
 
 mutable struct IndexedDF
