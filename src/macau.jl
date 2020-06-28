@@ -1,5 +1,6 @@
 using DelimitedFiles
 using Distributed: workers
+using LinearAlgebra.BLAS
 
 export macau
 

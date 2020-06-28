@@ -1,3 +1,4 @@
+using LinearAlgebra
 using SparseArrays: SparseMatrixCSC
 
 export pmult, imult

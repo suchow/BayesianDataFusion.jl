@@ -1,4 +1,5 @@
 using BayesianDataFusion
+using LinearAlgebra
 using Test
 
 rows = Int32[ 1:200; 151:350 ]
