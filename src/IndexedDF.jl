@@ -49,7 +49,7 @@ mutable struct FastIDF{Ti,Tv}
   index::Vector{Vector{Vector{Int64}}}
 end
 
-FastIDF(idf::IndexedDF) = FastIDF(convert(Array, idf.df[:,1:end-1]), convert(Array, idf.df[:,end]), idf.index)
+FastIDF(idf::IndexedDF) = FastIDF(convert(Matrix, idf.df[:,1:end-1]), convert(Array, idf.df[:,end]), idf.index)
 function FastIDF(df::DataFrame, dims::Vector{Int64})
   ## indexing all columns D - 1 columns (integers)
   index = [ [Int64[] for j in 1:i] for i in dims ]
