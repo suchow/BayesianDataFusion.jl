@@ -4,6 +4,19 @@ using DelimitedFiles
 using SparseArrays
 using Test
 
+# see https://docs.julialang.org/en/v0.4/stdlib/io-network/?highlight=readdlm#Base.readdlm
+function readdlm(path, delim)
+    res = []
+    open(path) do file
+        while !eof(file)
+            l = parse.(Float64, split(readline(file), delim))
+            ls = reshape(l, 1, length(l))
+            push!(res, ls)
+        end
+    end
+    reduce(vcat, res)
+end
+
 # IndexedDF
 X = IndexedDF(DataFrame(A=[2,2,3], B=[1,3,4], C=[0., -1., 0.5]), [4,4])
 @test BayesianDataFusion.nnz(X) == 3
