@@ -30,4 +30,4 @@ z[60:80].= true
 Az = A[z,:]
 Asbmz = Asbm[z,:]
 Az2 = sparse(Asbmz.rows, Asbmz.cols, 1.0)
-@test vecnorm(Az - Az2) < 1e-7
+@test norm(Az - Az2) < 1e-7
