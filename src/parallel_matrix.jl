@@ -90,7 +90,7 @@ end
 nonshared(A::ParallelSBM) = ParallelSBM(A.m, A.n, A.pids, A.sbms, A.logic, A.numblocks)
 
 function make_sems(numblocks::Int, pids::Vector{Int})
-  sems = SharedArray{UInt32,1}[SharedArray(UInt32, 16, pids=pids) for i=1:numblocks]
+  sems = SharedArray{UInt32,1}[SharedArray{UInt32}(16, pids=pids) for i=1:numblocks]
   for sem in sems
     sem_init(sem)
   end
@@ -109,9 +109,9 @@ end
 function ParallelSBM(rows::Vector{Int32}, cols::Vector{Int32}, pids::Vector{Int}=Int[]; weights=ones(length(pids)), m=maximum(rows), n=maximum(cols), numblocks=length(pids)*2 )
   length(rows) == length(cols) || throw(DimensionMismatch("length(rows) must equal length(cols)"))
 
-  shtmp = SharedArray(Float64, convert(Int, m), pids=pids)
-  sh1   = SharedArray(Float64, convert(Int, n), pids=pids)
-  sh2   = SharedArray(Float64, convert(Int, n), pids=pids)
+  shtmp = SharedArray{Float64}(convert(Int, m), pids=pids)
+  sh1   = SharedArray{Float64}(convert(Int, n), pids=pids)
+  sh2   = SharedArray{Float64}(convert(Int, n), pids=pids)
   sems  = make_sems(numblocks, pids)
   @compat ps = ParallelSBM(m, n, pids, Future[], Future[], numblocks, shtmp, sh1, sh2, sems)
   ranges  = make_lengths(length(rows), weights)
@@ -141,9 +141,9 @@ end
 function copyto(F::ParallelSBM, pids::Vector{Int})
   length(pids) == length(F.pids) || throw(DimensionMismatch("length(pids)=$(length(pids)) must equal length(F.pids)=$(length(F.pids))"))
 
-  shtmp = SharedArray(Float64, size(F, 1), pids=pids)
-  sh1   = SharedArray(Float64, size(F, 2), pids=pids)
-  sh2   = SharedArray(Float64, size(F, 2), pids=pids)
+  shtmp = SharedArray{Float64}(size(F, 1), pids=pids)
+  sh1   = SharedArray{Float64}(size(F, 2), pids=pids)
+  sh2   = SharedArray{Float64}(size(F, 2), pids=pids)
   sems  = make_sems(F.numblocks, pids)
   @compat ps    = ParallelSBM(F.m, F.n, pids, Future[], Future[], F.numblocks, shtmp, sh1, sh2, sems)
 

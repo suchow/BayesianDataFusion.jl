@@ -20,7 +20,7 @@ end
 @everywhere using BayesianDataFusion
 
 ######### lock test ############
-z = SharedArray(UInt32, 16)
+z = SharedArray{UInt32}(16)
 @test BayesianDataFusion.sem_init(z) == 0
 @test z[1] == 1
 @test fetch(@spawnat 2 z[1]) == 1
@@ -43,8 +43,8 @@ sbm = SparseBinMatrix(rows, cols)
 @test size(A) == (350, 399)
 @test size(sbm) == (350, 399)
 
-y = SharedArray(Float64, size(A, 1))
-x = SharedArray(Float64, size(A, 2))
+y = SharedArray{Float64}(size(A, 1))
+x = SharedArray{Float64}(size(A, 2))
 
 x[1:end] = rand( length(x) )
 
@@ -72,7 +72,7 @@ y9e = At_mul_B(B, x9)
 @test At_mul_B(sbm, x9) ≈ y9e
 
 ## testing AtA_mul_B!
-xn = SharedArray(Float64, size(A, 2))
+xn = SharedArray{Float64}(size(A, 2))
 AtA_mul_B!(xn, A, x, 0.1)
 xn_true = B' * B * x + 0.1 * x
 @test xn ≈ xn_true
