@@ -128,7 +128,7 @@ function ConditionalNormalWishart(U::Matrix{Float64}, mu::Vector{Float64}, beta_
 end
 
 function sample_alpha(alpha_lambda0::Float64, alpha_nu0::Float64, err::Vector{Float64})
-  Λ  = alpha_lambda0 * eye(1)
+  Λ  = alpha_lambda0 * Matrix{Float64}(I, 1, 1)
   n  = length(err)
   SW = inv(inv(Λ) .+ err' * err)
   return rand(Wishart(alpha_nu0 + n, SW))[1]
@@ -330,7 +330,7 @@ function sample_beta_rel(r::Relation)
 
   if isdefined(r.temp, :FF)
     ## using FF to compute beta_r
-    K = alpha * r.temp.FF + lambda * speye(F)
+    K = alpha * r.temp.FF + lambda * Matrix{Float64}(I, F, F)
     return K \ aFt_y
   else
     error("conjugate gradient unimplemented for sampling relation beta")
