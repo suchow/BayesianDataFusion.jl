@@ -20,8 +20,8 @@ cols2 = [1,1, 2, 3,3]
 ## test with random matrix
 A = sprand(100, 50, 0.2)
 A.nzval .= 1.0
-I,J,V = findnz(A)
-Asbm = SparseBinMatrix(I, J)
+myI,myJ,V = findnz(A)
+Asbm = SparseBinMatrix(myI, myJ)
 z = zeros(Bool, size(A,1))
 z[1:20] .= true
 z[40]   = true
