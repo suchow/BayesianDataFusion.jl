@@ -331,7 +331,7 @@ function Ft_mul_B(en::Entity{F,Relation}, B::Matrix{Float64}) where {F}
   if ! isempty(en.Frefs)
     return Frefs_t_mul_B(en.Frefs, B)
   else
-    return At_mul_B(en.F, B)
+    return transpose(en.F) * B
   end
 end
 
@@ -342,7 +342,7 @@ function reset!(data::RelationData, num_latent; lambda_beta=NaN, compute_ff_size
     en.modes_other = Vector{Int64}[ findall(en2 -> en2 != en, r.entities) for r in en.relations ]
     if hasFeatures(en)
       if size(en.F, 2) <= compute_ff_size
-        en.FF = full(At_mul_B(en.F, en.F))
+        en.FF = collect(transpose(en.F) * en.F)
         en.use_FF = true
       else
         ## setup CG on julia threads
