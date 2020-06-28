@@ -14,7 +14,7 @@ include("tensor.jl")                      # ✓✓
 include("custom_rd.jl")                   # ✓✓
 include("rel_feat.jl")                    # ✓✓
 include("lambda_sampling.jl")             # ✓✓
-# include("solver.jl")                      # ✗✓
+include("solver.jl")                      # ✓✓
 # include("sparse_csr.jl")                  # ✗✓
 # include("sparsebin_csr.jl")               # ✗✓
 include("sbm.jl")                         # ✓✓
