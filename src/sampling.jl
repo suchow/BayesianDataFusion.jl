@@ -7,13 +7,13 @@ export solve_full
 ## supports probe_vec of DataFrame or Matrix{Integer}
 function pred(r::Relation, probe_vec, F)
   if ! hasFeatures(r)
-    return udot(r, probe_vec) + r.model.mean_value
+    return udot(r, probe_vec) .+ r.model.mean_value
   end
-  return udot(r, probe_vec) + F * r.model.beta + r.model.mean_value
+  return udot(r, probe_vec) .+ F * r.model.beta .+ r.model.mean_value
 end
 
 function pred(r::Relation)
-  udot(r, r.data.df) + (hasFeatures(r) ? r.temp.linear_values : r.model.mean_value)
+  udot(r, r.data.df) .+ (hasFeatures(r) ? r.temp.linear_values : r.model.mean_value)
 end
 
 ## computes predictions sum(u1 .* u2 .* ... .* uR, 1) for relation r
@@ -92,7 +92,7 @@ function pred_all(r::Relation)
   if hasFeatures(r)
     error("Prediction of all elements is not possible when Relation has features.")
   end
-  udot_all(r) + r.model.mean_value
+  udot_all(r) .+ r.model.mean_value
 end
 
 function makeClamped(x, clamp::Vector{Float64})
@@ -128,7 +128,7 @@ end
 function sample_alpha(alpha_lambda0::Float64, alpha_nu0::Float64, err::Vector{Float64})
   Λ  = alpha_lambda0 * eye(1)
   n  = length(err)
-  SW = inv(inv(Λ) + err' * err)
+  SW = inv(inv(Λ) .+ err' * err)
   return rand(Wishart(alpha_nu0 + n, SW))[1]
 end
 
@@ -200,7 +200,7 @@ function sample_user_basic(uu::Integer, Au::FastIDF, mode::Int, mean_rating, sam
   id, v = getData(Au, mode, uu)
   ff = id[:, mode == 1 ? 2 : 1]
 
-  rr = v - mean_rating
+  rr = v .- mean_rating
   MM = sample_mt[:, ff]
 
   covar = inv(Lambda_u + alpha * (MM*MM'))
@@ -323,7 +323,7 @@ function sample_beta_rel(r::Relation)
   alpha  = r.model.alpha
   lambda = r.model.lambda_beta
 
-  res  = getValues(r.data) - udot(r, r.data.df) - r.model.mean_value
+  res  = getValues(r.data) .- udot(r, r.data.df) .- r.model.mean_value
   aFt_y = alpha * (r.F' * (res + alpha^(-0.5) * randn(N))) + sqrt(lambda) * randn(F)
 
   if isdefined(r.temp, :FF)

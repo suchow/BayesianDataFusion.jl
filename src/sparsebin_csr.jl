@@ -25,7 +25,7 @@ function SparseBinMatrixCSR(rows::Vector{Int32}, cols::Vector{Int32})
   m = convert(Int, maximum(rows))
   n = convert(Int, maximum(cols))
   row_ptr = zeros(Int32, m+1)
-  row_ptr[1:end] = length(rows)+1
+  row_ptr .= length(rows)+1
   rows2   = rows[rsorted]
   prev = zero(Int32)
   for i = one(Int32):convert(Int32,length(rows))
