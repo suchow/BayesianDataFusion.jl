@@ -210,7 +210,7 @@ function subtract_grad!(momentum::Matrix{Float64},
   num_latent = size(momentum, 1)
 
   for n in 1:size(sample, 2)
-    tmp = grad(n, sample, Vsample, Udata, model.Lambda, model.mu, alpha)
+    tmp = grad(n, sample, Vsample, copy(Udata), model.Lambda, model.mu, alpha)
     @inbounds for k in 1:num_latent
       momentum[k,n] -= eps * tmp[k]
     end
