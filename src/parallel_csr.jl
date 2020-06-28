@@ -1,3 +1,5 @@
+using SparseArrays: SparseMatrixCSC
+
 export pmult, imult
 export psparse, ParallelSparseMatrix
 export SparseMatrixCSR, sparse_csr

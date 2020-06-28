@@ -1,5 +1,6 @@
 using BayesianDataFusion
 using Distributed
+using SparseArrays
 using Test
 
 if nprocs() <= 1
