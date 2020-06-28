@@ -176,18 +176,18 @@ function hmc_update_u!(U_hmcmodel::HMCModel,
   num_latent = size(U_hmcmodel.momentum, 1)
 
   # 1) make half step in momentum
-  subtract_grad!(momentum, model, sample, Vsample, Udata, alpha, eps / 2)
+  subtract_grad!(momentum, model, sample, Vsample, copy(Udata), alpha, eps / 2)
 
   # 2) L times: make full steps with U, full step with momentum (except for last step)
   for i in 1:L
     add!(sample, momentum, eps)
     if i < L
-      subtract_grad!(momentum, model, sample, Vsample, Udata, alpha, eps)
+      subtract_grad!(momentum, model, sample, Vsample, copy(Udata), alpha, eps)
     end
   end
 
   # 3) make half step in momentum
-  subtract_grad!(momentum, model, sample, Vsample, Udata, alpha, eps / 2)
+  subtract_grad!(momentum, model, sample, Vsample, copy(Udata), alpha, eps / 2)
   nothing
 end
 
