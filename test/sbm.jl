@@ -1,9 +1,8 @@
 using BayesianDataFusion
-using Test
-
 using Compat
 using LinearAlgebra
 using SparseArrays
+using Test
 
 rows = [1:3; 2:4; 1:4]
 cols = [1,1,1, 2,2,2, 3,3,3,3]
