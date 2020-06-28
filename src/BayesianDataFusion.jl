@@ -2,6 +2,7 @@ VERSION >= v"0.4.0-dev+6521" && __precompile__()
 module BayesianDataFusion
 
 using Distributed: Future, @spawnat, remotecall_wait, remotecall_fetch, myid
+using SharedArrays: SharedVector, SharedArray
 include("ROC.jl")
 include("normal_wishart.jl")
 include("RelationData.jl")
