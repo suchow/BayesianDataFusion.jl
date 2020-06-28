@@ -237,6 +237,10 @@ import Base.*
 (A::SparseBinMatrix, x::AbstractArray{Tx,1}) where Tx = (y = zeros(Tx, A.m); A_mul_B!(y, A, x); y)
 (A::ParallelSBM,     x::AbstractArray{Tx,1}) where Tx = (y = zeros(Tx, A.m); A_mul_B!(y, A, x); y)
 
+At_mul_B!(y, A, B) = y .= A' * B
+
+A_mul_B!(y, A, B) = y .= A * B
+
 function A_mul_B!(y::AbstractArray{Tx,1}, A::SparseBinMatrix, x::AbstractArray{Tx,1}) where Tx
     A.n == length(x) || throw(DimensionMismatch("A.n=$(A.n) must equal length(x)=$(length(x))"))
     A.m == length(y) || throw(DimensionMismatch("A.m=$(A.m) must equal length(y)=$(length(y))"))
