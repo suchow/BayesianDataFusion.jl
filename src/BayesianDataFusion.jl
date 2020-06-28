@@ -1,8 +1,10 @@
-VERSION >= v"0.4.0-dev+6521" && __precompile__()
 module BayesianDataFusion
 
 using Distributed: Future, @spawnat, remotecall_wait, remotecall_fetch, myid
+using Printf: @printf, @sprintf
 using SharedArrays: SharedVector, SharedArray
+using Statistics: mean
+
 include("ROC.jl")
 include("normal_wishart.jl")
 include("RelationData.jl")

@@ -1,8 +1,7 @@
 #module ParallelMatrix
 
 export SparseBinMatrix, ParallelLogic, ParallelSBM, balanced_parallelsbm
-export sort_hilbert
-export AtA_mul_B!
+export AtA_mul_B!, A_mul_B!
 
 using Compat
 using LinearAlgebra

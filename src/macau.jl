@@ -1,6 +1,9 @@
+export macau
+
 using DelimitedFiles
 using Distributed: workers
 using LinearAlgebra.BLAS
+using Compat: eachrow
 
 export macau
 

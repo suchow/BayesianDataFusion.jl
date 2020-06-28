@@ -5,7 +5,6 @@ export pmult, imult
 export psparse, ParallelSparseMatrix
 export SparseMatrixCSR, sparse_csr
 
-using LinearAlgebra
 
 mutable struct ParallelSparseMatrix{TF}
   F::TF
