@@ -36,11 +36,11 @@ mutable struct EntityModel
   EntityModel(num_latent::Int, num_instances::Int) = new(
     zeros(num_latent, num_instances), ## sample
     zeros(num_latent),    ## mu
-    5*one(zeros(num_latent, num_latent)),    ## Lambda
+    5*Matrix{Float64}(I, num_latent, num_latent),    ## Lambda
     zeros(0, num_latent), ## beta
     zeros(num_latent),    ## mu0
     2.0,                  ## b0
-    one(zeros(num_latent, num_latent)),      ## WI
+    Matrix{Float64}(I, num_latent, num_latent),      ## WI
     num_latent,           ## nu0
     zeros(0,0)            ## uhat
   )
@@ -76,7 +76,7 @@ function initModel!(entity::Entity, num_latent::Int64; lambda_beta::Float64 = Na
 
   m.sample = zeros(num_latent, entity.count)
   m.mu     = zeros(num_latent)
-  m.Lambda = 5 * one(zeros(num_latent, num_latent))
+  m.Lambda = 5 * Matrix{Float64}(I, num_latent, num_latent)
   if hasFeatures(entity)
     m.beta = zeros( size(entity.F, 2), num_latent )
     m.uhat = zeros(num_latent, entity.count)
