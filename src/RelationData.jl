@@ -102,8 +102,8 @@ function toStr(en::Entity)
   return string(
     en.name[1:min(3,end)],
     "[",
-       @sprintf("U:%6.2f", vecnorm(en.model.sample)),
-       hasFeatures(en) ? @sprintf(" β:%3.2f", vecnorm(en.model.beta)) : "",
+       @sprintf("U:%6.2f", norm(en.model.sample)),
+       hasFeatures(en) ? @sprintf(" β:%3.2f", norm(en.model.beta)) : "",
        hasFeatures(en) && en.lambda_beta_sample ? @sprintf(" λ=%1.1f", en.lambda_beta) : "",
     "]")
 end
@@ -188,7 +188,7 @@ function toStr(r::Relation)
     r.name[1:min(4,end)],
     "[",
        @sprintf("α=%2.1f", r.model.alpha),
-       hasFeatures(r) ? @sprintf(" β:%2.1f", vecnorm(r.model.beta)) : "",
+       hasFeatures(r) ? @sprintf(" β:%2.1f", norm(r.model.beta)) : "",
     "]")
 end
 
