@@ -12,7 +12,7 @@ deepcopy(m::HMCModel) = HMCModel(copy(m.momentum))
 function HMCModel(num_latent::Int, N::Int, Ldiag::Vector{Float64})
   return HMCModel(
     zeros(num_latent, N),  ## momentum
-    repmat(Ldiag, 1, N)    ## mass matrix (G)
+    repeat(Ldiag, 1, N)    ## mass matrix (G)
   )
 end
 
