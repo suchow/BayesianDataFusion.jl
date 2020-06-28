@@ -1,4 +1,5 @@
 using Compat
+using LinearAlgebra
 
 ## basic copyto function, sets F up on cg pid
 copyto(F::Any, pids::Vector{Int}) = F

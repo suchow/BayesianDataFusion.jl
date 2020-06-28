@@ -1,5 +1,6 @@
 using Distributions
 using PDMats
+using LinearAlgebra: Hermitian, cholesky, Symmetric, tr
 
 export pred, pred_all
 export solve_full

@@ -1,4 +1,5 @@
 using BayesianDataFusion
+using LinearAlgebra: diag, dot
 using SparseArrays
 using Test
 

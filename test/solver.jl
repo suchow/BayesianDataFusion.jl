@@ -1,4 +1,5 @@
 using BayesianDataFusion
+using LinearAlgebra
 using Test
 
 X = rand(1000, 50)
