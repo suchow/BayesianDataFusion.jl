@@ -1,6 +1,7 @@
 export macau_hmc
 
 using Compat
+using LinearAlgebra: dot
 
 mutable struct HMCModel
   momentum::Matrix{Float64}
