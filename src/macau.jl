@@ -236,8 +236,8 @@ function macau(data::RelationData;
     result["predictions"][:pred]= vec(clamped_rat_all)
     if psamples >= 3
       tmp = vec(probe_stdev - probe_rat_all.^2 * psamples) / (psamples - 1)
-      tmp[ tmp .< 0 ] = 0
-      result["predictions"][:stdev] = sqrt(tmp)
+      tmp[ tmp .< 0 ] .= 0
+      result["predictions"][:stdev] = sqrt.(tmp)
     else
       result["predictions"][:stdev] = repeat([NaN], inner=[length(probe_rat_all)])
     end
