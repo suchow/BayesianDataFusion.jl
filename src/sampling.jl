@@ -216,7 +216,7 @@ end
 function sample_user_basic(uu::Integer, Au::FastIDF, mode::Int, mean_rating, sample_mt::Vector{Matrix{Float64}}, alpha::Float64, mu_u::Vector{Float64}, Lambda_u::Matrix{Float64})
   id, v = getData(Au, mode, uu)
 
-  rr = v - mean_rating
+  rr = v .- mean_rating
 
   #ff = id[:, mode == 1 ? 2 : 1]
   #MM = sample_mt[:, ff]
