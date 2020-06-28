@@ -19,8 +19,8 @@ include("solver.jl")                      # ✓✓
 # include("sparsebin_csr.jl")               # ✗✓
 include("sbm.jl")                         # ✓✓
 include("parallel_latent_basic.jl")       # ✓✓
+include("macau_hmc.jl")                   # ✓✓
 #
-# include("macau_hmc.jl")                   # ✗✓
 
 # include("parallel_matrix.jl")             # ✗✗
 # include("parallel_mult.jl")               # ✗✗
