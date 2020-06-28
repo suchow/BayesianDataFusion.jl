@@ -24,7 +24,7 @@ function udot(r::Relation, probe_vec::DataFrame)
   for i in 2:length(r.entities)
     U .*= r.entities[i].model.sample[ :, probe_vec[:,i] ]
   end
-  return vec(sum(U, 1))
+  return vec(sum(U, dims=1))
 end
 
 ## faster udot (about 2x) for matrices
