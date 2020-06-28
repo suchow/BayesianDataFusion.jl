@@ -340,7 +340,6 @@ end
 function update_latent_prior!(en::Entity, full_lambda_u::Bool)
   mj = en.model
 
-  local U::Matrix{Float64}
   nu   = mj.nu0
   Tinv = mj.WI
 
@@ -352,7 +351,7 @@ function update_latent_prior!(en::Entity, full_lambda_u::Bool)
       Tinv += mj.beta' * mj.beta * en.lambda_beta
     end
   else
-    U = mj.sample
+    U::Matrix{Float64} = mj.sample
   end
 
   mj.mu, mj.Lambda = rand( ConditionalNormalWishart(U, mj.mu0, mj.b0, Tinv, nu) )
