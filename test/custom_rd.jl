@@ -14,8 +14,8 @@ genes.lambda_beta = 3.0
 pheno.F = rand(50, 8);
 
 data = DataFrame(
-        gene = sample(1:100, 1050),
-        pheno = sample(1:50, 1050),
+        gene = rand(1:100, 1050),
+        pheno = rand(1:50, 1050),
         value = rand(1050))
 
 r  = Relation(data, "HPO", [genes, pheno])
