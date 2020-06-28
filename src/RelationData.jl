@@ -353,7 +353,7 @@ function reset!(data::RelationData, num_latent; lambda_beta=NaN, compute_ff_size
     r.temp = RelationTemp()
     if hasFeatures(r) && size(r.F,2) <= compute_ff_size
       r.temp.linear_values = r.model.mean_value * ones(numData(r))
-      r.temp.FF = full(r.F' * r.F)
+      r.temp.FF = collect(r.F' * r.F)
     end
   end
 end
