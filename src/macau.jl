@@ -91,7 +91,7 @@ function macau(data::RelationData;
       end
       if hasFeatures(r)
         r.model.beta = sample_beta_rel(r)
-        r.temp.linear_values = r.model.mean_value + r.F * r.model.beta
+        r.temp.linear_values = r.model.mean_value .+ r.F * r.model.beta
       end
     end
 
