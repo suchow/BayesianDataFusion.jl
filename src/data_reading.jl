@@ -85,7 +85,7 @@ function read_sparse(filename)
 end
 
 function filter_rare(X::SparseMatrixCSC, nmin)
-    featn = vec(sum(X, 1))
+    featn = vec(sum(X, dims=1))
     return X[:, featn .>= nmin]
 end
 

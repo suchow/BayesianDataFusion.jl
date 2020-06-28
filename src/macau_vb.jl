@@ -132,9 +132,9 @@ end
 function update_prior!(m::VBModel)
   num_latent = size(m.mu_u, 1)
 
-  m.mu_N = (m.b_0 * m.mu_0 + vec(sum(m.mu_u, 2)) ) / m.b_N
+  m.mu_N = (m.b_0 * m.mu_0 + vec(sum(m.mu_u, dims=2)) ) / m.b_N
 
-  m.W_N  = inv(m.Winv_0 + reshape(sum(m.Euu, 3), num_latent, num_latent)
+  m.W_N  = inv(m.Winv_0 + reshape(sum(m.Euu, dims=3), num_latent, num_latent)
                + m.b_0 * m.mu_0 * m.mu_0' - m.b_N * m.mu_N * m.mu_N' )
   nothing
 end
