@@ -1,3 +1,4 @@
+using Base.Iterators
 using Distributions
 using PDMats
 using LinearAlgebra: Hermitian, cholesky, Symmetric, tr
@@ -78,7 +79,7 @@ function udot_all(r::Relation)
   ## TODO: make tensor version faster:
   U = zeros( Int64[en.count for en in r.entities]... )
   num_latent = length(r.entities[1].model.mu)
-  for p in product( map(en -> 1:en.count, r.entities)... )
+  for p in Iterators.product( map(en -> 1:en.count, r.entities)... )
     x = ones(num_latent)
     for i in 1:length(p)
       x .*= r.entities[i].model.sample[:, p[i]]
