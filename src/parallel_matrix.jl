@@ -195,7 +195,7 @@ end
 
 function make_lengths(total::Int, weights)
     wnorm  = weights ./ sum(weights)
-    n      = convert(Vector{Int64}, round(wnorm * total))
+    n      = convert(Vector{Int64}, round.(Int, wnorm * total))
     excess = sum(n) - total
     i = 0
     while excess != 0
