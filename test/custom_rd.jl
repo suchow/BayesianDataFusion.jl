@@ -1,6 +1,7 @@
 using BayesianDataFusion
 using Test
 
+using SparseArrays
 using DataFrames
 
 ## create entities

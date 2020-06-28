@@ -1,5 +1,6 @@
 using BayesianDataFusion
 using Random
+using SparseArrays
 using Test
 
 X = sprand(50, 20, 0.1)

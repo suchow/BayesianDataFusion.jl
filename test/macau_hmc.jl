@@ -1,4 +1,5 @@
 using BayesianDataFusion
+using SparseArrays
 using Test
 
 ## testing column dot
