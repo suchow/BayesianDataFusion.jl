@@ -1,4 +1,5 @@
 using BayesianDataFusion
+using Distributed
 #using BayesianDataFusion.ParallelMatrix
 using Test
 

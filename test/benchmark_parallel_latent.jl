@@ -1,4 +1,5 @@
 using BayesianDataFusion
+using Distributed
 
 if nprocs() <= 1
   addprocs(8)

@@ -1,4 +1,5 @@
 using BayesianDataFusion
+using Distributed
 using Test
 
 if nprocs() <= 1
