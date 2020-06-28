@@ -13,7 +13,7 @@ addprocs(2)
 @everywhere using BayesianDataFusion
 
 fp  = psparse(X, workers())
-Z1p = At_mul_B(fp, Y1)
+Z1p = transpose(fp) * Y1
 Z2p = fp * Y2
 
 @test Z1 ≈ Z1p
@@ -31,7 +31,7 @@ result = macau(rd, burnin = 2, psamples = 2, num_latent=5, verbose=false)
 ########### parallel sparse with CSR ###########
 fp2 = psparse(sparse_csr(X), workers())
 
-Z1r = At_mul_B(fp2, Y1)
+Z1r = transpose(fp2) * Y1
 Z2r = fp2 * Y2
 
 @test Z1 ≈ Z1r
