@@ -3,7 +3,6 @@ using SparseArrays: SparseMatrixCSC
 
 export pmult, imult
 export psparse, ParallelSparseMatrix
-export SparseMatrixCSR, sparse_csr
 
 
 mutable struct ParallelSparseMatrix{TF}
@@ -33,29 +32,6 @@ Ac_mul_B(A::ParallelSparseMatrix, B::ParallelSparseMatrix) = Ac_mul_B(A.F, B.F)
 At_mul_B(A::ParallelSparseMatrix, B::ParallelSparseMatrix) = At_mul_B(A.F, B.F)
 
 A_mul_Bt(A, B) = A * B'
-
-###### CSR matrix ######
-
-mutable struct SparseMatrixCSR{Tv,Ti}
-  csc::SparseMatrixCSC{Tv,Ti}
-end
-
-sparse_csr(csc::SparseMatrixCSC) = SparseMatrixCSR(SparseMatrixCSC(csc'))
-sparse_csr(rows, cols, vals) = SparseMatrixCSR(sparse(cols, rows, vals))
-
-At_mul_B(A::SparseMatrixCSR, u::AbstractVector) = A.csc * u
-Ac_mul_B(A::SparseMatrixCSR, u::AbstractVector) = A.csc * u
-*(A::SparseMatrixCSR, u::AbstractVector) = At_mul_B(A.csc, u)
-At_mul_B(A::SparseMatrixCSR, B::SparseMatrixCSR) = A_mul_Bt(A.csc, B.csc)
-isempty(A::SparseMatrixCSR) = isempty(A.csc)
-
-eltype(A::SparseMatrixCSR) = eltype(A.csc)
-function size(A::SparseMatrixCSR)
-  m,n = size(A.csc)
-  return n,m
-end
-size(A::SparseMatrixCSR,d) = (d>2 ? 1 : size(A)[d])
-
 
 ###### parallel multiplication ######
 
