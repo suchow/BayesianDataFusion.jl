@@ -100,8 +100,8 @@ function macau_hmc(data::RelationData;
     else
       ## reject
       verbose && print("-> REJECTED!\n")
-      Base.copy!(data.entities[1].model.sample, Ustart)
-      Base.copy!(data.entities[2].model.sample, Vstart)
+      copyto!(data.entities[1].model.sample, Ustart)
+      copyto!(data.entities[2].model.sample, Vstart)
       if dH < -6
         ## decreasing eps by 2
         neweps = eps / 2
@@ -289,12 +289,12 @@ end
 function update_yhat_post!(yhat_post, yhat_raw, i, burnin)
   ## also takes care of the first sample of posterior
   if i <= burnin + 1
-    Base.copy!(yhat_post, yhat_raw)
+    copyto!(yhat_post, yhat_raw)
     return yhat_post
   end
 
   ## averaging
   n = i - burnin - 1
-  Base.copy!(yhat_post, (n*yhat_post + yhat_raw) / (n + 1))
+  copyto!(yhat_post, (n*yhat_post + yhat_raw) / (n + 1))
   return yhat_post
 end

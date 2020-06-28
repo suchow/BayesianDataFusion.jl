@@ -67,7 +67,7 @@ function cg_AtA(A, b::AbstractVector{Float64}, lambda::Float64, p::AbstractVecto
     x = zeros(Float64, length(b))
     #r = b - A * x
     r = zeros(length(x)) + b
-    Base.copy!(p, r)
+    copyto!(p, r)
     bkden = zero(eltype(x))
 
     for iter = 1:maxiter
