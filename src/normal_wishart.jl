@@ -24,19 +24,19 @@ struct NormalWishart <: ContinuousMultivariateDistribution
                 break
             end
         end
-        @compat new(d, zmean, mu, Float64(kappa), full(Symmetric(T)), Float64(nu))
+        @compat new(d, zmean, mu, Float64(kappa), collect(Symmetric(T)), Float64(nu))
     end
 end
 
 function NormalWishart(mu::Vector{Float64}, kappa::Real,
                        T::AbstractMatrix{Float64}, nu::Real)
-    NormalWishart(mu, kappa, full(T), nu)
+    NormalWishart(mu, kappa, collect(T), nu)
 end
 
 import Distributions.rand
 
 function rand(nw::NormalWishart)
     Lam = rand(Wishart(nw.nu, nw.T))
-    mu = rand(MvNormal(nw.mu, full(inv(Symmetric(Lam))) ./ nw.kappa))
+    mu = rand(MvNormal(nw.mu, collect(inv(Symmetric(Lam))) ./ nw.kappa))
     return (mu, Lam)
 end
