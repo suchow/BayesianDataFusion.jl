@@ -46,7 +46,7 @@ function udot(r::Relation, probe_vec::Matrix)
   for i in 2:length(r.entities)
     U .*= r.entities[i].model.sample[:,probe_vec[:,i]]
   end
-  return vec(sum(U, 1))
+  return vec(sum(U, dims=1))
 end
 
 function udot2(uid::Vector, vid::Vector, U::Matrix, V::Matrix)
@@ -67,7 +67,7 @@ function udot2(uid::Vector, vid::Vector, U::Matrix, V::Matrix)
   return result
 end
 
-## computes predictions sum(u1 .* u2 .* ... .* uR, 2) for all points in relation r
+## computes predictions sum(u1 .* u2 .* ... .* uR, dims=2) for all points in relation r
 function udot_all(r::Relation)
   ## matrix version:
   if length(r.entities) == 2

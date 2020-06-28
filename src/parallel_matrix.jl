@@ -126,8 +126,8 @@ function ParallelSBM(rows::Vector{Int32}, cols::Vector{Int32}, pids::Vector{Int}
     mblock_grid[:,i] = [! isempty(intersect(sbm.mrange, i)) for i in mblocks]
     nblock_grid[:,i] = [! isempty(intersect(sbm.nrange, i)) for i in nblocks]
   end
-  mblock_counts = vec(sum(mblock_grid, 2))
-  nblock_counts = vec(sum(nblock_grid, 2))
+  mblock_counts = vec(sum(mblock_grid, dims=2))
+  nblock_counts = vec(sum(nblock_grid, dims=2))
   for i in 1:length(pids)
     mb = block_order(mblock_counts, findall(mblock_grid[:,i]))
     nb = block_order(nblock_counts, findall(nblock_grid[:,i]))

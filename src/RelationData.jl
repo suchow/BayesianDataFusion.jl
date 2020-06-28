@@ -451,13 +451,13 @@ function show(io::IO, en::Entity)
 end
 
 function normalizeFeatures!(entity::Entity)
-  diagsq  = sqrt(vec( sum(entity.F .^ 2,1) ))
+  diagsq  = sqrt(vec( sum(entity.F .^ 2, dims=1) ))
   entity.F  = entity.F * spdiagm(1.0 ./ diagsq)
   return
 end
 
 function normalizeRows!(entity::Entity)
-  diagf    = sqrt(vec( sum(entity.F.^2, 2) ))
+  diagf    = sqrt(vec( sum(entity.F.^2, dims=2) ))
   entity.F = spdiagm( 1.0 ./ diagf ) * entity.F
 end
 

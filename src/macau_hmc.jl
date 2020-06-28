@@ -269,8 +269,8 @@ function computePotential(uid::Vector, vid::Vector, val::Vector, r::Relation)
   energy += sum(Vmodel.Lambda .* (Vsample * Vsample')) / 2
 
   ## -2 * sum(mu_u' * Lambda_u * u_i)
-  energy -= first(Umodel.mu' * Umodel.Lambda * sum(Usample, 2))
-  energy -= first(Vmodel.mu' * Vmodel.Lambda * sum(Vsample, 2))
+  energy -= first(Umodel.mu' * Umodel.Lambda * sum(Usample, dims=2))
+  energy -= first(Vmodel.mu' * Vmodel.Lambda * sum(Vsample, dims=2))
 
   return energy
 end
