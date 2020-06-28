@@ -64,7 +64,8 @@ function read_binary_float32(filename)
     open(filename) do f
         nrows = read(f, Int64)
         ncols = read(f, Int64)
-        return read(f, Float32, (nrows, ncols))
+        res = Matrix{Float32}(undef, nrows, ncols)
+        return read!(f, res)
     end
 end
 
