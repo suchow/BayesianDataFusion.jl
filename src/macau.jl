@@ -5,7 +5,15 @@ using Distributed: workers
 using LinearAlgebra.BLAS
 using Compat: eachrow
 
-export macau
+# see defn at Julia v0.4 https://docs.julialang.org/en/v0.4/stdlib/io-network/?highlight=writedlm#Base.writedlm
+function writedlm(path, matrix, delim)
+    open(path, "w") do file
+        for r in eachrow(matrix)
+            r_str = join(string.(r), ",")
+            println(file, r_str)
+        end
+    end
+end
 
 function macau(data::RelationData;
               num_latent::Int = 10,
