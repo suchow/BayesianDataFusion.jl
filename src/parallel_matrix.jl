@@ -279,7 +279,7 @@ end
 function A_mul_B!(y::SharedArray{Tx,1}, A::ParallelSBM, x::SharedArray{Tx,1}) where Tx
   A.n == length(x) || throw(DimensionMismatch("A.n=$(A.n) must equal length(x)=$(length(x))"))
   A.m == length(y) || throw(DimensionMismatch("A.m=$(A.m) must equal length(y)=$(length(y))"))
-  y[1:end] = zero(Tx)
+  y[1:end] .= zero(Tx)
   np = length(A.pids)
   @sync begin
     for p in 1:length(A.pids)
