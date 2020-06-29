@@ -15,7 +15,7 @@ include("custom_rd.jl")                   # ✓✓
 include("rel_feat.jl")                    # ✓✓
 include("lambda_sampling.jl")             # ✓✓
 include("solver.jl")                      # ✓✓
-# include("sparsebin_csr.jl")               # ✗✓
+include("sparsebin_csr.jl")               # ✓✓
 include("sbm.jl")                         # ✓✓
 include("parallel_latent_basic.jl")       # ✓✓
 include("macau_hmc.jl")                   # ✓✓
