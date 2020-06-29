@@ -1,5 +1,6 @@
 using BayesianDataFusion
 using LinearAlgebra
+using SparseArrays
 using Test
 
 rows = Int32[ 1:200; 151:350 ]
