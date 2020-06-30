@@ -101,8 +101,8 @@ function makeClamped(x, clamp::Vector{Float64})
   isempty(clamp) && return x
 
   x2 = copy(x)
-  x2[x2 .< clamp[1]] = clamp[1]
-  x2[x2 .> clamp[2]] = clamp[2]
+  x2[x2 .< clamp[1]] .= clamp[1]
+  x2[x2 .> clamp[2]] .= clamp[2]
   return x2
 end
 
