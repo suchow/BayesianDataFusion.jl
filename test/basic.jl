@@ -51,6 +51,9 @@ Xf32 = FastIDF(IndexedDF(DataFrame(A=Int32[1,2,3], B=Int32[1,2,3], C=Float32[0.5
 Xf32b = FastIDF(DataFrame(A=Int32[1,2,3], B=Int32[1,2,3], C=Float32[0.5, -0.1, 0.0]), [3, 3])
 @test typeof(Xf32b) == FastIDF{Int32, Float32}
 
+@test size(Xf32b) == (3, 3)
+@test size(Xf32b, 2) == 3
+
 # IndexedDF with tuple input
 X2 = IndexedDF(DataFrame(A=[2,2,3], B=[1,3,4], C=[0., -1., 0.5]), (4,4))
 @test size(X2) == (4,4)
