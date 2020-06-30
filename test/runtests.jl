@@ -18,8 +18,6 @@ include("solver.jl")                      # ✓✓
 include("sbm.jl")                         # ✓✓
 include("parallel_latent_basic.jl")       # ✓✓
 
-# include("parallel_matrix.jl")             # ✗✗
-# include("parallel_mult.jl")               # ✗✗
 include("parallel_latent_full.jl")        # ✓✓
 include("parallel_latent_tensor.jl")      # ✓✓
 # include("heavy_copyto.jl")                # ✗✗
