@@ -59,7 +59,7 @@ function FastIDF(df::DataFrame, dims::Vector{Int64})
       push!(index[mode][j], i)
     end
   end
-  ix = convert(Array, df[:, 1:end-1])
+  ix = convert(Matrix, df[:, 1:end-1])
   v  = convert(Array, df[:, end])
   return FastIDF(ix, v, index)
 end
