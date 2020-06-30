@@ -15,7 +15,6 @@ export RelationData, addRelation!
 export Relation, numData, numTest, assignToTest!, setTest!
 export Entity, toStr, normalizeFeatures!, normalizeRows!
 export EntityModel
-export load_mf1c
 export setPrecision!
 
 mutable struct EntityModel
@@ -463,42 +462,4 @@ end
 function normalizeRows!(entity::Entity)
   diagf    = sqrt(vec( sum(entity.F.^2, dims=2) ))
   entity.F = spdiagm( 1.0 ./ diagf ) * entity.F
-end
-
-function load_mf1c(;ic50_file     = "chembl_19_mf1c/chembl-IC50-346targets.csv",
-                   cmp_feat_file  = "chembl_19_mf1c/chembl-IC50-compound-feat.csv",
-                   normalize_feat = false,
-                   alpha_sample   = false)
-  ## reading IC50 matrix
-  X = readtable(ic50_file, header=true)
-  rename!(X, [:row, :col], [:compound, :target])
-
-  dims = [maximum(X[:compound]), maximum(X[:target])]
-
-  X[:, :value] = log10(X[:, :value]) + 1e-5
-  idx          = sample(1:size(X,1), round(Int, floor(20/100 * size(X,1))); replace=false)
-  probe_vec    = X[idx,:]
-  X            = X[setdiff(1:size(X,1), idx), :]
-
-  ## reading feature matrix
-  feat = readtable(cmp_feat_file, header=true)
-  F    = sparse(feat[:compound], feat[:feature], 1.0)
-
-  #Am = sparse( X[:compound], X[:target], X[:value])
-  Xi = IndexedDF(X, dims)
-
-  ## creating data object
-  data = RelationData(Xi, feat1 = F, alpha_sample = alpha_sample)
-  data.relations[1].test_vec    = probe_vec
-  data.relations[1].test_label  = data.relations[1].test_vec[:,3] .< log10(200)
-
-  if normalize_feat != false
-    if normalize_feat == "rows"
-      normalizeRows!(data.entities[1])
-    else
-      normalizeFeatures!(data.entities[1])
-    end
-  end
-
-  return data
 end
