@@ -15,7 +15,6 @@ include("custom_rd.jl")                   # ✓✓
 include("rel_feat.jl")                    # ✓✓
 include("lambda_sampling.jl")             # ✓✓
 include("solver.jl")                      # ✓✓
-include("sbm.jl")                         # ✓✓
 include("parallel_latent_basic.jl")       # ✓✓
 
 include("parallel_latent_full.jl")        # ✓✓
