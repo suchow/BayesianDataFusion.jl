@@ -1,4 +1,5 @@
 using BayesianDataFusion
+using JLD
 using Test
 
 using DataFrames
@@ -22,13 +23,13 @@ tmpdir = mktempdir()
 try
   local result
   result = macau(rd, burnin=5, psamples=10, num_latent=2, verbose=false, output_beta=true, output="$tmpdir/macau-betasaving", output_type="binary")
-  @test isfile("$tmpdir/macau-betasaving-A-01.binary")
-  @test isfile("$tmpdir/macau-betasaving-A-01.beta.binary")
-  @test isfile("$tmpdir/macau-betasaving-A-02.beta.binary")
-  beta_sample1 = read_binary_float32("$tmpdir/macau-betasaving-A-01.beta.binary")
+  @test isfile("$tmpdir/macau-betasaving-A-01.jld")
+  @test isfile("$tmpdir/macau-betasaving-A-01.beta.jld")
+  @test isfile("$tmpdir/macau-betasaving-A-02.beta.jld")
+  beta_sample1 = load("$tmpdir/macau-betasaving-A-01.beta.jld", "beta")
   @test 2 == size(beta_sample1, 2) ## number of latents
   @test 3 == size(beta_sample1, 1) ## number of features
-  beta_sample2 = read_binary_float32("$tmpdir/macau-betasaving-A-10.beta.binary")
+  beta_sample2 = load("$tmpdir/macau-betasaving-A-10.beta.jld", "beta")
   beta_last    = convert(Array{Float32}, rd.entities[1].model.beta)
   @test beta_sample2 ≈ beta_last
 finally

@@ -1,19 +1,12 @@
 export macau
 
+using CSV
 using DelimitedFiles
 using Distributed: workers
+using JLD
 using LinearAlgebra.BLAS
 using Compat: eachrow
 
-# see defn at Julia v0.4 https://docs.julialang.org/en/v0.4/stdlib/io-network/?highlight=writedlm#Base.writedlm
-function writedlm(path, matrix, delim)
-    open(path, "w") do file
-        for r in eachrow(matrix)
-            r_str = join(string.(r), ",")
-            println(file, r_str)
-        end
-    end
-end
 
 function macau(data::RelationData;
               num_latent::Int = 10,
@@ -167,11 +160,18 @@ function macau(data::RelationData;
         for en in data.entities
           ndigits = convert( Int, floor(log10(psamples)) ) + 1
           nstr    = lpad(string(i-burnin), ndigits, "0")
-          output_type == "binary" && write_binary_matrix(@sprintf("%s-%s-%s.binary", output, en.name, nstr), convert(Array{Float32}, en.model.sample) )
-          output_type == "csv"    && writedlm(@sprintf("%s-%s-%s.csv", output, en.name, nstr), convert(Array{Float32}, en.model.sample), ',')
+          fn = "$(output)-$(en.name)-$nstr"
+          if output_type == "binary"
+            save(string(fn, ".jld"), "sample", en.model.sample)
+          else output_type == "csv"
+            CSV.write(string(fn, ".csv"), DataFrame(en.model.sample), writeheader=false)  # todo: writeheader => header
+          end
           if output_beta && hasFeatures(en)
-            output_type == "binary" && write_binary_matrix(@sprintf("%s-%s-%s.beta.binary", output, en.name, nstr), convert(Array{Float32}, en.model.beta) )
-            output_type == "csv"    && writedlm(@sprintf("%s-%s-%s.beta.csv", output, en.name, nstr), convert(Array{Float32}, en.model.beta), ',')
+            if output_type == "binary"
+              save(string(fn, ".beta.jld"), "beta", en.model.beta)
+            else output_type == "csv"
+              CSV.write(string(fn, ".csv"), DataFrame(en.model.beta), writeheader=false)
+            end
           end
         end
       end

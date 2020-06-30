@@ -14,6 +14,4 @@ include("parallel_cg.jl")
 include("sampling.jl")
 include("macau.jl")
 
-include("data_reading.jl")
-
 end # module

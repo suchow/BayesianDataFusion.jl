@@ -1,6 +1,8 @@
 using BayesianDataFusion
+using CSV
 using DataFrames
 using DelimitedFiles
+using JLD
 using SparseArrays
 using Test
 
@@ -137,18 +139,18 @@ result1a = macau(rd, burnin = 1, psamples = 2, verbose = false, rmse_train = tru
 @test result1a["RMSE_train"] >= 0
 
 # writing output (latent vectors) works
-tmpdir = mktempdir()
+tmpdir = mktempdir()  # TODO: cleanup=true
 try
   rd2 = RelationData(Y, class_cut = 0.5, entity1 = "e1", entity2 = "e2")
   result1b = macau(rd2, burnin = 1, psamples = 10, verbose = false, num_latent = 5, output = "$tmpdir/macau-runtest", output_type="binary")
-  @test isfile("$tmpdir/macau-runtest-e1-01.binary")
-  @test isfile("$tmpdir/macau-runtest-e1-02.binary")
-  @test isfile("$tmpdir/macau-runtest-e2-01.binary")
-  @test isfile("$tmpdir/macau-runtest-e2-02.binary")
-  e1_sample = read_binary_float32("$tmpdir/macau-runtest-e1-01.binary")
+  @test isfile("$tmpdir/macau-runtest-e1-01.jld")
+  @test isfile("$tmpdir/macau-runtest-e1-02.jld")
+  @test isfile("$tmpdir/macau-runtest-e2-01.jld")
+  @test isfile("$tmpdir/macau-runtest-e2-02.jld")
+  e1_sample = load("$tmpdir/macau-runtest-e1-01.jld", "sample")
   @test size(Y,1) == size(e1_sample,2) ## number of instances
   @test 5         == size(e1_sample,1) ## number of latents
-  e1_sample2 = read_binary_float32("$tmpdir/macau-runtest-e1-10.binary")
+  e1_sample2 = load("$tmpdir/macau-runtest-e1-10.jld", "sample")
   e1_last    = convert(Array{Float32}, rd2.entities[1].model.sample)
   @test e1_sample2 ≈ e1_last
 finally
@@ -164,10 +166,13 @@ try
   @test isfile("$tmpdir/macau-runtest-e1-02.csv")
   @test isfile("$tmpdir/macau-runtest-e2-01.csv")
   @test isfile("$tmpdir/macau-runtest-e2-02.csv")
-  e1_sample = readdlm("$tmpdir/macau-runtest-e1-01.csv", ',')
+  df1 = CSV.read("$tmpdir/macau-runtest-e1-01.csv", header=false)
+  e1_sample = convert(Matrix{Float64}, df1)
+
   @test size(Y,1) == size(e1_sample,2) ## number of instances
   @test 5         == size(e1_sample,1) ## number of latents
-  e1_sample2 = readdlm("$tmpdir/macau-runtest-e1-10.csv", ',')
+  df2 = CSV.read("$tmpdir/macau-runtest-e1-10.csv", header=false)
+  e1_sample2 = convert(Matrix{Float64}, df2)
   e1_last    = convert(Array{Float32}, rd2.entities[1].model.sample)
   @test e1_sample2 ≈ e1_last
 finally
