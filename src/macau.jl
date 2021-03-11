@@ -164,13 +164,13 @@ function macau(data::RelationData;
           if output_type == "binary"
             save(string(fn, ".jld"), "sample", en.model.sample)
           else output_type == "csv"
-            CSV.write(string(fn, ".csv"), DataFrame(en.model.sample), writeheader=false)  # todo: writeheader => header
+            CSV.write(string(fn, ".csv"), DataFrame(en.model.sample), header=false)
           end
           if output_beta && hasFeatures(en)
             if output_type == "binary"
               save(string(fn, ".beta.jld"), "beta", en.model.beta)
             else output_type == "csv"
-              CSV.write(string(fn, ".beta.csv"), DataFrame(en.model.beta), writeheader=false)
+              CSV.write(string(fn, ".beta.csv"), DataFrame(en.model.beta), header=false)
             end
           end
         end
