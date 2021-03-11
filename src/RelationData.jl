@@ -248,9 +248,9 @@ function setTest!(r::Relation, test_mat::SparseMatrixCSC)
   test_df = DataFrame()
   tnz = findnz(test_mat)
 
-  test_df[ names(r.data.df)[1] ] = tnz[1]
-  test_df[ names(r.data.df)[2] ] = tnz[2]
-  test_df[ names(r.data.df)[3] ] = tnz[3]
+  test_df[!, names(r.data.df)[1] ] = tnz[1]
+  test_df[!, names(r.data.df)[2] ] = tnz[2]
+  test_df[!, names(r.data.df)[3] ] = tnz[3]
 
   r.test_vec   = test_df
   r.test_label = r.test_vec[:,end] .< r.class_cut

@@ -125,8 +125,8 @@ assignToTest!(rd.relations[1], 2)
 # running the data
 result = macau(rd, burnin = 10, psamples = 10, verbose = false)
 @test size(result["predictions"],1) == 2
-@test length(result["predictions"][:stdev]) == 2
-@test all(result["predictions"][:stdev] .>= 0)
+@test length(result["predictions"][!, :stdev]) == 2
+@test all(result["predictions"][!, :stdev] .>= 0)
 
 # testing pred_all
 Yhat = pred_all(rd.relations[1])
@@ -137,7 +137,7 @@ Yhat = pred_all(rd.relations[1])
 result1 = macau(rd, burnin = 10, psamples = 10, verbose = false, full_prediction = true)
 @test size(result1["predictions_full"]) == (15, 10)
 x1 = result1["predictions"][1, 1:2]
-y1 = result1["predictions"][:pred][1]
+y1 = result1["predictions"][!, :pred][1]
 @test result1["predictions_full"][x1[1], x1[2]] ≈ y1
 
 # rmse_train works

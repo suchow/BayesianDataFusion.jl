@@ -246,13 +246,13 @@ function macau(data::RelationData;
   if numTest(data.relations[1]) > 0
     rel = data.relations[1]
     result["predictions"] = copy(rel.test_vec)
-    result["predictions"][:pred]= vec(clamped_rat_all)
+    result["predictions"][!, :pred]= vec(clamped_rat_all)
     if psamples >= 3
       tmp = vec(probe_stdev - probe_rat_all.^2 * psamples) / (psamples - 1)
       tmp[ tmp .< 0 ] .= 0
-      result["predictions"][:stdev] = sqrt.(tmp)
+      result["predictions"][!, :stdev] = sqrt.(tmp)
     else
-      result["predictions"][:stdev] = repeat([NaN], inner=[length(probe_rat_all)])
+      result["predictions"][!, :stdev] = repeat([NaN], inner=[length(probe_rat_all)])
     end
     train_count = zeros(Int, numTest(rel), length(size(rel)) )
     for i in 1:numTest(rel)
